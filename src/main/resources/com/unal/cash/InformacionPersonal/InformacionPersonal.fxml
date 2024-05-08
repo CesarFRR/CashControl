@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unal.cash.Controller.InformacionPersonalController">
+   <children>
+      <Region layoutX="478.0" layoutY="355.0" prefHeight="27.0" prefWidth="108.0" style="-fx-background-color: #022B3A; -fx-background-radius: 40;" />
+      <Region layoutX="135.0" prefHeight="62.0" prefWidth="330.0" style="-fx-background-color: #022B3A; -fx-background-radius: 40;" />
+      <Label layoutX="197.0" layoutY="15.0" text="Información Personal" textFill="WHITE">
+         <font>
+            <Font name="Arial Black" size="22.0" />
+         </font>
+      </Label>
+      <Region layoutX="-33.0" layoutY="99.0" prefHeight="50.0" prefWidth="609.0" style="-fx-background-color: #229FB8; -fx-background-radius: 45;" />
+      <Region layoutX="-17.0" layoutY="175.0" prefHeight="50.0" prefWidth="547.0" style="-fx-background-color: #5CC9DE; -fx-background-radius: 45;" />
+      <Region layoutX="-19.0" layoutY="247.0" prefHeight="50.0" prefWidth="482.0" style="-fx-background-color: #BFDBF7; -fx-background-radius: 45;" />
+      <Region layoutX="-17.0" layoutY="319.0" prefHeight="50.0" prefWidth="410.0" style="-fx-background-color: #E1E5F2; -fx-background-radius: 45;" />
+      <Label layoutX="14.0" layoutY="110.0" text="Usuario:">
+         <font>
+            <Font name="Arial Black" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="txtName" layoutX="107.0" layoutY="115.0" text="Nombre y apellido">
+         <font>
+            <Font name="Arial Bold Italic" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="15.0" layoutY="186.0" text="Tipo de usuario:">
+         <font>
+            <Font name="Arial Black" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="txtTipoUsuario" layoutX="172.0" layoutY="191.0" text="No premium">
+         <font>
+            <Font name="Arial Bold Italic" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="17.0" layoutY="258.0" text="Correo:">
+         <font>
+            <Font name="Arial Black" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="txtEmail" layoutX="89.0" layoutY="263.0" text="Correo usuario">
+         <font>
+            <Font name="Arial Bold Italic" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="15.0" layoutY="330.0" text="Número de identificación:">
+         <font>
+            <Font name="Arial Black" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="txtNumeroID" layoutX="286.0" layoutY="335.0" text="CC.">
+         <font>
+            <Font name="Arial Bold Italic" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="508.0" layoutY="355.0" onMouseReleased="#cambioInterfaz" text="Volver" textFill="WHITE">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
