@@ -1,6 +1,5 @@
 package com.unal.cash.Model.Login;
 
-// clase para poder usar el usuario logeado en todo el codigo 
 
 public class SesionUsuario {
     private static String Susuario;

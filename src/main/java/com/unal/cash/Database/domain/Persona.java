@@ -3,6 +3,7 @@ package com.unal.cash.Database.domain;
 //esta es la clase que tiene relacion con la base de datos
 
 public class Persona {
+    private int id;
     private double idPersona;
     private String usuario;
     private String contraseña;
@@ -65,7 +66,8 @@ public class Persona {
     }
 
 
-    public Persona(double idPersona, String usuario, String contraseña, String nombre, String apellido, String email, double telefono, double ingresosmensuales, double transporte, double alimentacion, double servicios, double educacion, double entretenimiento, double personal, double excedentefindemes, double perfilconsumo, String metodopagomasusado) {
+    public Persona(int id, double idPersona, String usuario, String contraseña, String nombre, String apellido, String email, double telefono, double ingresosmensuales, double transporte, double alimentacion, double servicios, double educacion, double entretenimiento, double personal, double excedentefindemes, double perfilconsumo, String metodopagomasusado) {
+        this.id = id;
         this.idPersona = idPersona;
         this.usuario = usuario;
         this.contraseña = contraseña;
@@ -224,5 +226,9 @@ public class Persona {
     @Override
     public String toString() {
         return "Persona{" + "idPersona=" + idPersona + ", usuario=" + usuario + ", contrase\u00f1a=" + contraseña + ", nombre=" + nombre + ", apellido=" + apellido + ", email=" + email + ", telefono=" + telefono + ", ingresosmensuales=" + ingresosmensuales + ", transporte=" + transporte + ", alimentacion=" + alimentacion + ", servicios=" + servicios + ", educacion=" + educacion + ", entretenimiento=" + entretenimiento + ", personal=" + personal + ", excedentefindemes=" + excedentefindemes + ", perfilconsumo=" + perfilconsumo + ", metodopagomasusado=" + metodopagomasusado + '}';
+    }
+
+    public int getId() {
+        return this.id;
     }
 }

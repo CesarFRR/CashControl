@@ -9,7 +9,7 @@ import java.util.*;
 //esta clase es la que maneja la interaccion con la clase persona y la base de datos para manipular la base de datos
 public class PersonaDAO {
 
-    private static final String SQL_SELECT = "SELECT id_persona, usuario, contraseña, nombre, apellido, email, telefono, ingresosmensuales, transporte, alimentacion, servicios, educacion, entretenimiento, personal, excedentefindemes, perfilconsumo, metodopagomasusado FROM informacionpersonal";
+    private static final String SQL_SELECT = "SELECT id, id_persona, usuario, contraseña, nombre, apellido, email, telefono, ingresosmensuales, transporte, alimentacion, servicios, educacion, entretenimiento, personal, excedentefindemes, perfilconsumo, metodopagomasusado FROM informacionpersonal";
     private static final String SQL_INSERT = "INSERT INTO informacionpersonal (id_persona, usuario, contraseña, nombre, apellido, email, telefono, ingresosmensuales, transporte, alimentacion, servicios, educacion, entretenimiento, personal, excedentefindemes, perfilconsumo, metodopagomasusado) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private static final String SQL_UPDATE = "UPDATE informacionpersonal SET usuario = ?, contraseña = ?, nombre = ?, apellido = ?, email = ?, telefono = ?, ingresosmensuales = ?, transporte = ?, alimentacion = ?, servicios = ?, educacion = ?, entretenimiento = ?, personal = ?, excedentefindemes = ?, perfilconsumo = ?, metodopagomasusado = ? WHERE id_persona = ?";
     private static final String SQL_DELETE = "DELETE FROM informacionpersonal WHERE id_persona = ?";
@@ -28,6 +28,7 @@ public class PersonaDAO {
             stmt = conn.prepareStatement(SQL_SELECT);
             rs = stmt.executeQuery();
             while (rs.next()) {
+                int id = rs.getInt("id");
                 double idPersona = rs.getDouble("id_persona");
                 String usuario = rs.getString("usuario");
                 String contraseña = rs.getString("contraseña");
@@ -47,7 +48,7 @@ public class PersonaDAO {
                 String metodopagomasusado = rs.getString("metodopagomasusado");
 
                 // con esta variable estamos convirtiendo información de la base de datos hacia objetos java
-                persona = new Persona(idPersona, usuario, contraseña, nombre, apellido, email, telefono, ingresosmensuales, transporte, alimentacion, servicios, educacion, entretenimiento, personal, excedentefindemes, perfilconsumo, metodopagomasusado);
+                persona = new Persona(id, idPersona, usuario, contraseña, nombre, apellido, email, telefono, ingresosmensuales, transporte, alimentacion, servicios, educacion, entretenimiento, personal, excedentefindemes, perfilconsumo, metodopagomasusado);
 
                 //añadimos a la lista tipo Persona, la variable persona, la cual contiene toda la informacion de una persona
                 personas.add(persona);

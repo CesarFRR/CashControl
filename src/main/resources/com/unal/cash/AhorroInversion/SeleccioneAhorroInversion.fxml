@@ -20,12 +20,12 @@
          </font>
       </Label>
       <Button layoutX="250.0" layoutY="436.0" mnemonicParsing="false" onAction="#cambioInterfaz" prefHeight="26.0" prefWidth="133.0" style="-fx-background-color: #022B3A; -fx-background-radius: 15;" text="Volver" textFill="WHITE" />
-      <LineChart axisSortingPolicy="Y_AXIS" layoutX="53.0" layoutY="106.0" legendSide="TOP" prefHeight="103.0" prefWidth="146.0" title="S&amp;P 500">
+      <LineChart axisSortingPolicy="Y_AXIS" layoutX="53.0" layoutY="106.0" legendSide="TOP" onMouseReleased="#CambiarSP500" prefHeight="103.0" prefWidth="146.0" title="S&amp;P 500">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>
         <yAxis>
-          <NumberAxis onMouseReleased="#CambiarSP500" side="LEFT" />
+          <NumberAxis side="LEFT" />
         </yAxis>
       </LineChart>
       <LineChart layoutX="373.0" layoutY="106.0" onMouseReleased="#CambiarOro" prefHeight="93.0" prefWidth="66.0" title="Oro">

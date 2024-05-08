@@ -52,7 +52,6 @@ public class RegistroIngresosMensualesController {
 
     @FXML
     void CambiarContinuar(ActionEvent event) {
-        //TODO: registrar ingresos mensuales nuevos en la base de datos
         if(SesionUsuario.session()){
             try {
                 PersonaDAO P0 = new PersonaDAO();

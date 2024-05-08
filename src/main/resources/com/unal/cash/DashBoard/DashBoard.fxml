@@ -44,7 +44,7 @@
                         <Font name="Arial Bold Italic" size="18.0" />
                      </font>
                   </Button>
-                  <Button layoutX="28.0" layoutY="649.0" mnemonicParsing="false" onAction="#cambioSoporte" prefHeight="44.0" prefWidth="328.0" style="-fx-text-fill: #022B3A; -fx-background-color: #BFDBF7;" text="Sobre Nosotros">
+                  <Button layoutX="28.0" layoutY="649.0" mnemonicParsing="false" onAction="#cambioSobreNosotros" prefHeight="44.0" prefWidth="328.0" style="-fx-text-fill: #022B3A; -fx-background-color: #BFDBF7;" text="Sobre Nosotros">
                      <font>
                         <Font name="Arial Bold Italic" size="18.0" />
                      </font>

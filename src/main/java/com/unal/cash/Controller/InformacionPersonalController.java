@@ -25,7 +25,7 @@ public class InformacionPersonalController {
         String usuario = SesionUsuario.getUsuarioLog();
         String[] datosStr = personaDao.SeleccionarUnoDS(usuario);
         double[] datosDbl = personaDao.SeleccionarUnoDDouble(usuario);
-        this.txtName.setText(datosStr[2] + datosStr[3]);
+        this.txtName.setText(datosStr[2] + " "+ datosStr[3]);
         this.txtEmail.setText(datosStr[4]);
         this.txtTipoUsuario.setText("Cliente");
         Double ID = datosDbl[0];

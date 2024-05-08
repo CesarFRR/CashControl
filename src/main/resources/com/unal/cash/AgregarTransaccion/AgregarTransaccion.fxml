@@ -51,7 +51,7 @@
             <Font name="Arial Black" size="14.0" />
          </font>
       </Label>
-      <Button fx:id="btGuardarTransaccion" layoutX="234.0" layoutY="333.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: #022B3A;" text="Guardar transacción" textFill="WHITE" />
+      <Button fx:id="btGuardarTransaccion" layoutX="234.0" layoutY="333.0" mnemonicParsing="false" onAction="#GuardarTransaccion" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: #022B3A;" text="Guardar transacción" textFill="WHITE" />
       <Button layoutX="262.0" layoutY="377.0" mnemonicParsing="false" onAction="#cambioInterfaz" prefHeight="26.0" prefWidth="94.0" style="-fx-background-color: #022B3A;" text="Volver" textFill="WHITE" />
    </children>
 </AnchorPane>

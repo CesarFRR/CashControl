@@ -5,6 +5,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.unal.cash.App;
+import com.unal.cash.Database.datos.PersonaDAO;
+import com.unal.cash.Database.domain.Persona;
 import com.unal.cash.Model.Login.SesionUsuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,6 +19,7 @@ public class MetodosdePagoController {
     public Button btTarjetaDebito;
     public Button btTransaccionAplicacion;
     public Button btTarjetaCredito;
+
     public TextField txtCostoPorTransaccion;
     public TextField txtCashBack;
     public TextField txtIntereses;
@@ -30,6 +33,7 @@ public class MetodosdePagoController {
     private String metodo;
 
     private final String[] metodosPago = {"Tarjeta de Débito", "Tarjeta de Crédito", "Efectivo","Transacción por aplicación"};
+    private PersonaDAO personaDao= new PersonaDAO();
 
 
     @FXML
@@ -71,5 +75,20 @@ public class MetodosdePagoController {
 
     public void ActualizarCaracteristicasPago(ActionEvent actionEvent) {
     //TODO: llamar a bases de datos y actualizar caracterisitcas de pago!
+
+        if(SesionUsuario.session()){
+            try {
+                Persona P = this.personaDao.getPersona(SesionUsuario.getUsuarioLog());
+                P.setMetodopagomasusado(this.metodo);
+
+
+                System.out.println("Caracteristicas de pago actualizadas correctamente!!");
+                System.out.println("persona:\n" + P.toString());
+                new App().mostrarVista("MetodosdePago/MetodosdePagoActualizados.fxml");
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+        }
     }
 }

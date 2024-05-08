@@ -7,12 +7,14 @@ import com.unal.cash.Model.Login.SesionUsuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class PerfildeConsumoController {
+    public Label labConsumoActual;
     @FXML
     private Button bt_150_Mas;
 
@@ -31,6 +33,8 @@ public class PerfildeConsumoController {
     @FXML
     private Button bt_MasDineroFinDe;
 
+    private Persona P;
+
     private Button selected;
     private final String[] perfilesConsumo = {
             "Gasto dinero todos los dias entre 5.000 - 20.000",
@@ -45,6 +49,7 @@ public class PerfildeConsumoController {
 
     @FXML
     void initialize() {
+        this.P = this.personaDao.getPersona(SesionUsuario.getUsuarioLog());
         this.btlist = new ArrayList<>();
         btlist.add(bt_150_Mas);
         btlist.add(bt_20_50);
@@ -52,6 +57,8 @@ public class PerfildeConsumoController {
         btlist.add(bt_5_20);
         btlist.add(bt_90_150);
         btlist.add(bt_MasDineroFinDe);
+        int indexConsumoActual = Integer.getInteger(Double.toString(P.getPerfilconsumo()));
+        labConsumoActual.setText("Perfil de consumo actual: "+ this.perfilesConsumo[indexConsumoActual]);
     }
 
     @FXML
@@ -114,6 +121,7 @@ public class PerfildeConsumoController {
 
     @FXML
     void CambiarContinuar(ActionEvent event) {
+        if(this.selected ==null) return;
         int index = Arrays.asList(this.perfilesConsumo).indexOf(this.selected.getText());
         Persona P =this.personaDao.getPersona(SesionUsuario.getUsuarioLog());
         double data = Double.parseDouble(Integer.toString(index));

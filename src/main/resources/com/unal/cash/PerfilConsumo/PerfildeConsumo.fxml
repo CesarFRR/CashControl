@@ -20,7 +20,7 @@
             <Font name="Arial Black" size="32.0" />
          </font>
       </Label>
-      <Label layoutX="161.0" layoutY="72.0" prefHeight="38.0" prefWidth="277.0" text="Perfil de consumo actual: Gasto dinero todos los dias entre 20.000 - 50.000" textAlignment="CENTER" textFill="#1f7a8c" wrapText="true">
+      <Label fx:id="labConsumoActual" layoutX="161.0" layoutY="72.0" prefHeight="38.0" prefWidth="277.0" text="Perfil de consumo actual: Gasto dinero todos los dias entre 20.000 - 50.000" textAlignment="CENTER" textFill="#1f7a8c" wrapText="true">
          <font>
             <Font name="Arial Italic" size="12.0" />
          </font>
@@ -58,6 +58,8 @@
             <DropShadow />
          </effect>
       </Region>
-      <Button layoutX="244.0" layoutY="342.0" mnemonicParsing="false" onAction="#CambiarContinuar" prefHeight="26.0" prefWidth="110.0" style="-fx-background-color: #022B3A; -fx-background-radius: 10;" text="Continuar" textFill="WHITE" />
+      <Button layoutX="432.0" layoutY="342.0" mnemonicParsing="false" onAction="#CambiarContinuar" prefHeight="26.0" prefWidth="110.0" style="-fx-background-color: #022B3A; -fx-background-radius: 10;" text="Continuar" textFill="WHITE" />
+      <Button layoutX="87.0" layoutY="342.0" mnemonicParsing="false" onAction="#cambioInterfaz" prefHeight="26.0" prefWidth="110.0" style="-fx-background-color: #022B3A; -fx-background-radius: 10;" text="Volver" textFill="WHITE" />
+
    </children>
 </AnchorPane>

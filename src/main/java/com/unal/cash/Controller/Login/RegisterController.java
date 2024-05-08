@@ -93,6 +93,23 @@ public class RegisterController {
         this.cbPerfilConsumo.getItems().addAll(this.perfilesConsumo);
         this.cbPerfilConsumo.setOnAction(this::getPerfilConsumo);
 
+        if (SesionUsuario.session()){
+
+            Persona P = this.personaDao.getPersona(SesionUsuario.getUsuarioLog());
+
+            this.tfNombre.setText(P.getNombre());
+            this.tfApellido.setText(P.getApellido());
+            this.tfNewUser.setText(P.getUsuario());
+            this.tfEmail.setText(P.getEmail());
+            this.tfNumeroDocumento.setText(Double.toString(P.getIdPersona()));
+            this.tfTelefono.setText(Double.toString(P.getTelefono()));
+            this.tfIngresosmensuales.setText(Double.toString(P.getIngresosmensuales()));
+
+
+
+
+        }
+
     }
 
     private void getPerfilConsumo(ActionEvent actionEvent) {
@@ -152,7 +169,6 @@ public class RegisterController {
 
     @FXML
     void guardarGastos(ActionEvent event) {
-        //TODO: Implementar la lógica para continuar con el registro aquí
         if (SesionUsuario.session()){
 
             int index = Arrays.asList(this.perfilesConsumo).indexOf(this.cbPerfilConsumoSelected);
