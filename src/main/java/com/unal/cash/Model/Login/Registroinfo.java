@@ -100,25 +100,25 @@ public class Registroinfo {
     public void ingresoinfoDouble(){
         String n_doc = "";
 
-        while(true){
-            System.out.print("\nIngrese su número de documento: ");
-            n_doc = sc.nextLine();
-            boolean validacionUsuario = false;
-            List<Persona> personas = personaDao.seleccionar();
-            for (Persona persona: personas){
-                if (persona.getIdPersona()==Double.parseDouble(n_doc) ){
-                    validacionUsuario = true;
-                }
-            }
-            if (validacionUsuario){
-                System.out.println("\nnúmero de documento, ya está en uso. Por favor ingrese uno nuevo.");
-                continue;
-            } else {
-
-                System.out.println("N_DOC COMO SERIA STRING: " + n_doc + " COMO SERIA DOUBLE: " + Double.parseDouble(n_doc));
-                break;
-            }
-        }
+//        while(true){
+//            System.out.print("\nIngrese su número de documento: ");
+//            n_doc = sc.nextLine();
+//            boolean validacionUsuario = false;
+//            List<Persona> personas = personaDao.seleccionar();
+//            for (Persona persona: personas){
+//                if (persona.getIdPersona()==Double.parseDouble(n_doc) ){
+//                    validacionUsuario = true;
+//                }
+//            }
+//            if (validacionUsuario){
+//                System.out.println("\nnúmero de documento, ya está en uso. Por favor ingrese uno nuevo.");
+//                continue;
+//            } else {
+//
+//                System.out.println("N_DOC COMO SERIA STRING: " + n_doc + " COMO SERIA DOUBLE: " + Double.parseDouble(n_doc));
+//                break;
+//            }
+//        }
 
         while (true){
             System.out.print("\nIngrese su telefono: ");
@@ -242,7 +242,7 @@ public class Registroinfo {
             }
         }
         
-        datosDbl = new double[]{telefono, ingresosmensuales, transporte, alimentacion, servicios, educacion, entretenimiento, personal, perfilconsumo, Double.parseDouble(n_doc)};
+        datosDbl = new double[]{telefono, ingresosmensuales, transporte, alimentacion, servicios, educacion, entretenimiento, personal, perfilconsumo};
         
     }
     
@@ -256,7 +256,7 @@ public class Registroinfo {
     //double datosDbl[] ={telefono, ingresosmensuales, transporte, alimentacion, servicios, educacion, entretenimiento, personal, perfilconsumo};
     //(String usuario, String contraseña, String nombre, String apellido, String email, double telefono, double ingresosmensuales, double transporte, double alimentacion, double servicios, double educacion, double entretenimiento, double personal, double excedentefindemes, double perfilconsumo, String metodopagomasusado)
     
-    Persona personaNueva = new Persona(dtsStr[2], dtsStr[3], dtsStr[0], dtsStr[1], dtsStr[4], dtsDbl[0],dtsDbl[1],dtsDbl[2],dtsDbl[3],dtsDbl[4],dtsDbl[5],dtsDbl[6],dtsDbl[7],0.0,dtsDbl[8],dtsStr[5], datosDbl[datosDbl.length - 1]);
+    Persona personaNueva = new Persona(dtsStr[2], dtsStr[3], dtsStr[0], dtsStr[1], dtsStr[4], dtsDbl[0],dtsDbl[1],dtsDbl[2],dtsDbl[3],dtsDbl[4],dtsDbl[5],dtsDbl[6],dtsDbl[7],0.0,dtsDbl[8],dtsStr[5]);
     personaDao.insertar(personaNueva);
     
     System.out.println("¡Registro de datos exitoso!");

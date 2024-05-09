@@ -96,20 +96,20 @@ public class DashBoardController {
 
         this.setTxtExcedenteFinDeMes("$" + FExcedenteFinDeMes);
 
-
-        List<Transaccion> trlist = this.transaccionesDAO.seleccionar();
-
-        for (Transaccion t : trlist) {
-            Item n = new Item();
-            n.setId(t.getId());
-            n.setMonto(Integer.parseInt(t.getMonto()));
-            n.setMetodoDePago(t.getMetodo_de_pago());
-            n.setFecha(t.getFecha_registro().toString());
-
-            this.items.add(n); // Add the Item object to the ArrayList
-            System.out.println("trlist: \n" + t.toString());
-            System.out.println("items: \n" + n.toString());
-        }
+//TODO:  get form json
+        //List<Transaccion> trlist = this.transaccionesDAO.seleccionar();
+//
+//        for (Transaccion t : trlist) {
+//            Item n = new Item();
+//            n.setId(1);
+//            n.setMonto(Integer.parseInt(t.getMonto()));
+//            n.setMetodoDePago(t.getMetodo_de_pago());
+//            n.setFecha(t.getFecha_registro().toString());
+//
+//            this.items.add(n); // Add the Item object to the ArrayList
+//            System.out.println("trlist: \n" + t.toString());
+//            System.out.println("items: \n" + n.toString());
+//        }
 //        TableColumn<Item, Integer> idCol = new TableColumn<>("ID");
 //        idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
 //
@@ -122,13 +122,13 @@ public class DashBoardController {
 //        TableColumn<Item, String> fechaCol = new TableColumn<>("Fecha");
 //        fechaCol.setCellValueFactory(new PropertyValueFactory<>("fecha"));
 
-        this.col_id.setCellValueFactory(new PropertyValueFactory<Item, Integer>("id"));
-
-        this.col_monto.setCellValueFactory(new PropertyValueFactory<Item, Integer>("monto"));
-
-        this.col_metodo.setCellValueFactory(new PropertyValueFactory<Item, String>("metodoDePago"));
-
-        this.col_fecha.setCellValueFactory(new PropertyValueFactory<Item, String>("fecha"));
+//        this.col_id.setCellValueFactory(new PropertyValueFactory<Item, Integer>("id"));
+//
+//        this.col_monto.setCellValueFactory(new PropertyValueFactory<Item, Integer>("monto"));
+//
+//        this.col_metodo.setCellValueFactory(new PropertyValueFactory<Item, String>("metodoDePago"));
+//
+//        this.col_fecha.setCellValueFactory(new PropertyValueFactory<Item, String>("fecha"));
 
 
 //        this.tbTabla.getColumns().clear();
@@ -136,7 +136,7 @@ public class DashBoardController {
 //        TableColumn<?, ?> unnamedColumn = this.tbTabla.getColumns().getLast(); // Replace 'index' with the actual column index
 //        unnamedColumn.setVisible(false);
 // Set the items list of the TableView to the ArrayList of Item objects
-        this.tbTabla.setItems(FXCollections.observableArrayList(items));
+        //this.tbTabla.setItems(FXCollections.observableArrayList(items));
 
 
     }

@@ -83,7 +83,7 @@ public class ModificarInfo {
                         continue;
                     } else {
                         // Modificar el usuario de la respectiva persona
-                        Persona personaModificar = new Persona(usuarioNuevo, contraseña, nombre, apellido, email, telefono , ingresosmensuales, transporte, alimentacion, servicios, educacion, entretenimiento, personal, excedentefindemes, perfilconsumo, metodopagomasusado, id_persona);
+                        Persona personaModificar = new Persona(usuarioNuevo, contraseña, nombre, apellido, email, telefono , ingresosmensuales, transporte, alimentacion, servicios, educacion, entretenimiento, personal, excedentefindemes, perfilconsumo, metodopagomasusado);
                         personaDao.actualizar(personaModificar);
                         System.out.println("\n¡Actualización de usuario exitosa!");
                         break;
@@ -99,7 +99,7 @@ public class ModificarInfo {
                     System.out.print("\nIngrese su nueva contraseña: ");
                     String nuevaContraseña = sc.nextLine();
                      // Modificar la contraseña de la respectiva persona
-                    Persona personaModificar = new Persona( usuario, nuevaContraseña, nombre, apellido, email, telefono , ingresosmensuales, transporte, alimentacion, servicios, educacion, entretenimiento, personal, excedentefindemes, perfilconsumo, metodopagomasusado, id_persona);
+                    Persona personaModificar = new Persona( id_persona, usuario, nuevaContraseña, nombre, apellido, email, telefono , ingresosmensuales, transporte, alimentacion, servicios, educacion, entretenimiento, personal, excedentefindemes, perfilconsumo, metodopagomasusado);
                     personaDao.actualizar(personaModificar);
                     System.out.println("\n¡Actualización de contraseña exitosa!");
                     break;
@@ -113,7 +113,7 @@ public class ModificarInfo {
                 System.out.print("\nIngrese su nuevo nombre: ");
                 String nombreNuevo = sc.nextLine();
                 // Modificar el nombre de la respectiva persona
-                Persona personaModificar = new Persona(usuario, contraseña, nombreNuevo, apellido, email, telefono , ingresosmensuales, transporte, alimentacion, servicios, educacion, entretenimiento, personal, excedentefindemes, perfilconsumo, metodopagomasusado, id_persona);
+                Persona personaModificar = new Persona(id_persona, usuario, contraseña, nombreNuevo, apellido, email, telefono , ingresosmensuales, transporte, alimentacion, servicios, educacion, entretenimiento, personal, excedentefindemes, perfilconsumo, metodopagomasusado);
                 personaDao.actualizar(personaModificar);
                 System.out.println("\n¡Actualización de nombre exitosa!");
                 
@@ -121,7 +121,7 @@ public class ModificarInfo {
                 System.out.print("\nIngrese su nuevo apellido: ");
                 String apellidoNuevo = sc.nextLine();
                 // Modificar el apellido de la respectiva persona
-                Persona personaModificar = new Persona( usuario, contraseña, nombre, apellidoNuevo, email, telefono , ingresosmensuales, transporte, alimentacion, servicios, educacion, entretenimiento, personal, excedentefindemes, perfilconsumo, metodopagomasusado, id_persona);
+                Persona personaModificar = new Persona( id_persona, usuario, contraseña, nombre, apellidoNuevo, email, telefono , ingresosmensuales, transporte, alimentacion, servicios, educacion, entretenimiento, personal, excedentefindemes, perfilconsumo, metodopagomasusado);
                 personaDao.actualizar(personaModificar);
                 System.out.println("\n¡Actualización de apellido exitosa!"); 
             }
@@ -130,7 +130,7 @@ public class ModificarInfo {
                 System.out.print("\nIngrese su nuevo email: ");
                 String emailNuevo = sc.nextLine();
                 // Modificar el email de la respectiva persona
-                Persona personaModificar = new Persona(usuario, contraseña, nombre, apellido, emailNuevo, telefono , ingresosmensuales, transporte, alimentacion, servicios, educacion, entretenimiento, personal, excedentefindemes, perfilconsumo, metodopagomasusado, id_persona);
+                Persona personaModificar = new Persona(id_persona, usuario, contraseña, nombre, apellido, emailNuevo, telefono , ingresosmensuales, transporte, alimentacion, servicios, educacion, entretenimiento, personal, excedentefindemes, perfilconsumo, metodopagomasusado);
                 personaDao.actualizar(personaModificar);
                 System.out.println("\n¡Actualización de email exitosa!"); 
             }
@@ -139,7 +139,7 @@ public class ModificarInfo {
                 System.out.print("\nIngrese su nuevo método de pago más usado: ");
                 String metodopagomasusadoNuevo = sc.nextLine();
                 // Modificar el nombre de la respectiva persona
-                Persona personaModificar = new Persona(usuario, contraseña, nombre, apellido, email, telefono , ingresosmensuales, transporte, alimentacion, servicios, educacion, entretenimiento, personal, excedentefindemes, perfilconsumo, metodopagomasusadoNuevo, id_persona);
+                Persona personaModificar = new Persona(id_persona, usuario, contraseña, nombre, apellido, email, telefono , ingresosmensuales, transporte, alimentacion, servicios, educacion, entretenimiento, personal, excedentefindemes, perfilconsumo, metodopagomasusadoNuevo);
                 personaDao.actualizar(personaModificar);
                 System.out.println("\n¡Actualización de método de pago exitosa!"); 
             }
@@ -153,7 +153,7 @@ public class ModificarInfo {
                     if (telefonoNuevo<0){
                         throw new InputMismatchException();
                     }
-                    Persona personaModificar = new Persona(usuario, contraseña, nombre, apellido, email, telefonoNuevo , ingresosmensuales, transporte, alimentacion, servicios, educacion, entretenimiento, personal, excedentefindemes, perfilconsumo, metodopagomasusado, id_persona);
+                    Persona personaModificar = new Persona(id_persona, usuario, contraseña, nombre, apellido, email, telefonoNuevo , ingresosmensuales, transporte, alimentacion, servicios, educacion, entretenimiento, personal, excedentefindemes, perfilconsumo, metodopagomasusado);
                     personaDao.actualizar(personaModificar);
                     System.out.println("\n¡Actualización de número de teléfono exitosa!");
                     break;
@@ -173,7 +173,7 @@ public class ModificarInfo {
                     if (ingresosmensualesNuevo<0){
                         throw new InputMismatchException();
                     }
-                    Persona personaModificar = new Persona( usuario, contraseña, nombre, apellido, email, telefono , ingresosmensualesNuevo, transporte, alimentacion, servicios, educacion, entretenimiento, personal, excedentefindemes, perfilconsumo, metodopagomasusado, id_persona);
+                    Persona personaModificar = new Persona( id_persona, usuario, contraseña, nombre, apellido, email, telefono , ingresosmensualesNuevo, transporte, alimentacion, servicios, educacion, entretenimiento, personal, excedentefindemes, perfilconsumo, metodopagomasusado);
                     personaDao.actualizar(personaModificar);
                     System.out.println("\n¡Actualización de ingresos mensuales exitosa!");
                     break;
@@ -193,7 +193,7 @@ public class ModificarInfo {
                     if (transporteNuevo<0){
                         throw new InputMismatchException();
                     }
-                    Persona personaModificar = new Persona(usuario, contraseña, nombre, apellido, email, telefono , ingresosmensuales, transporteNuevo, alimentacion, servicios, educacion, entretenimiento, personal, excedentefindemes, perfilconsumo, metodopagomasusado, id_persona);
+                    Persona personaModificar = new Persona(id_persona, usuario, contraseña, nombre, apellido, email, telefono , ingresosmensuales, transporteNuevo, alimentacion, servicios, educacion, entretenimiento, personal, excedentefindemes, perfilconsumo, metodopagomasusado);
                     personaDao.actualizar(personaModificar);
                     System.out.println("\n¡Actualización de gasto mensual en transporte exitosa!");
                     break;
@@ -213,7 +213,7 @@ public class ModificarInfo {
                     if (alimentacionNuevo<0){
                         throw new InputMismatchException();
                     }
-                    Persona personaModificar = new Persona(usuario, contraseña, nombre, apellido, email, telefono , ingresosmensuales, transporte, alimentacionNuevo, servicios, educacion, entretenimiento, personal, excedentefindemes, perfilconsumo, metodopagomasusado, id_persona);
+                    Persona personaModificar = new Persona(id_persona, usuario, contraseña, nombre, apellido, email, telefono , ingresosmensuales, transporte, alimentacionNuevo, servicios, educacion, entretenimiento, personal, excedentefindemes, perfilconsumo, metodopagomasusado);
                     personaDao.actualizar(personaModificar);
                     System.out.println("\n¡Actualización de gasto mensual en alimentación exitosa!");
                     break;
@@ -233,7 +233,7 @@ public class ModificarInfo {
                     if (serviciosNuevo<0){
                         throw new InputMismatchException();
                     }
-                    Persona personaModificar = new Persona(usuario, contraseña, nombre, apellido, email, telefono , ingresosmensuales, transporte, alimentacion, serviciosNuevo, educacion, entretenimiento, personal, excedentefindemes, perfilconsumo, metodopagomasusado, id_persona);
+                    Persona personaModificar = new Persona(id_persona, usuario, contraseña, nombre, apellido, email, telefono , ingresosmensuales, transporte, alimentacion, serviciosNuevo, educacion, entretenimiento, personal, excedentefindemes, perfilconsumo, metodopagomasusado);
                     personaDao.actualizar(personaModificar);
                     System.out.println("\n¡Actualización de gasto mensual en servicios exitosa!");
                     break;
@@ -254,7 +254,7 @@ public class ModificarInfo {
                     if (educacionNuevo<0){
                         throw new InputMismatchException();
                     }
-                    Persona personaModificar = new Persona(usuario, contraseña, nombre, apellido, email, telefono , ingresosmensuales, transporte, alimentacion, servicios, educacionNuevo, entretenimiento, personal, excedentefindemes, perfilconsumo, metodopagomasusado, id_persona);
+                    Persona personaModificar = new Persona(id_persona, usuario, contraseña, nombre, apellido, email, telefono , ingresosmensuales, transporte, alimentacion, servicios, educacionNuevo, entretenimiento, personal, excedentefindemes, perfilconsumo, metodopagomasusado);
                     personaDao.actualizar(personaModificar);
                     System.out.println("\n¡Actualización de gasto mensual en educación exitosa!");
                     break;
@@ -274,7 +274,7 @@ public class ModificarInfo {
                     if (entretenimientoNuevo<0){
                         throw new InputMismatchException();
                     }
-                    Persona personaModificar = new Persona(usuario, contraseña, nombre, apellido, email, telefono , ingresosmensuales, transporte, alimentacion, servicios, educacion, entretenimientoNuevo, personal, excedentefindemes, perfilconsumo, metodopagomasusado, id_persona);
+                    Persona personaModificar = new Persona(id_persona, usuario, contraseña, nombre, apellido, email, telefono , ingresosmensuales, transporte, alimentacion, servicios, educacion, entretenimientoNuevo, personal, excedentefindemes, perfilconsumo, metodopagomasusado);
                     personaDao.actualizar(personaModificar);
                     System.out.println("\n¡Actualización de gasto mensual en entretenimiento exitosa!");
                     break;
@@ -294,7 +294,7 @@ public class ModificarInfo {
                     if (personalNuevo<0){
                         throw new InputMismatchException();
                     }
-                    Persona personaModificar = new Persona(usuario, contraseña, nombre, apellido, email, telefono , ingresosmensuales, transporte, alimentacion, servicios, educacion, entretenimiento, personalNuevo, excedentefindemes, perfilconsumo, metodopagomasusado, id_persona);
+                    Persona personaModificar = new Persona(id_persona, usuario, contraseña, nombre, apellido, email, telefono , ingresosmensuales, transporte, alimentacion, servicios, educacion, entretenimiento, personalNuevo, excedentefindemes, perfilconsumo, metodopagomasusado);
                     personaDao.actualizar(personaModificar);
                     System.out.println("\n¡Actualización de gasto personal mensual exitosa!");
                     break;
@@ -314,7 +314,7 @@ public class ModificarInfo {
                     if (perfilconsumoNuevo<0){
                         throw new InputMismatchException();
                     }
-                    Persona personaModificar = new Persona(usuario, contraseña, nombre, apellido, email, telefono , ingresosmensuales, transporte, alimentacion, servicios, educacion, entretenimiento, personal, excedentefindemes, perfilconsumoNuevo, metodopagomasusado, id_persona);
+                    Persona personaModificar = new Persona(id_persona, usuario, contraseña, nombre, apellido, email, telefono , ingresosmensuales, transporte, alimentacion, servicios, educacion, entretenimiento, personal, excedentefindemes, perfilconsumoNuevo, metodopagomasusado);
                     personaDao.actualizar(personaModificar);
                     System.out.println("\n¡Actualización de gasto mensual en transporte exitosa!");
                     break;

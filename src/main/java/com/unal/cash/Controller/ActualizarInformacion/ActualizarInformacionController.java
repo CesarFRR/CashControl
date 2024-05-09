@@ -1,4 +1,4 @@
-package com.unal.cash.Controller.Login;
+package com.unal.cash.Controller.ActualizarInformacion;
 
 import com.unal.cash.App;
 import com.unal.cash.Database.datos.PersonaDAO;
@@ -12,7 +12,7 @@ import javafx.scene.control.*;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class RegisterController {
+public class ActualizarInformacionController {
 
     public TextField tfNumeroDocumento;
     public Label lb_crearCuenta;
@@ -82,17 +82,19 @@ public class RegisterController {
     private TextField tfTransporte;
 
     private static Object[] part1;
+
     public void initialize() {
-        if (this.cbMetoPago == null) this.cbMetoPago = new ChoiceBox<String>();
 
-        this.cbMetoPago.getItems().addAll(this.metodosPago);
-        this.cbMetoPago.setOnAction(this::getMetoPago);
 
-        if (this.cbPerfilConsumo == null) this.cbPerfilConsumo = new ChoiceBox<String>();
-        this.cbPerfilConsumo.getItems().addAll(this.perfilesConsumo);
-        this.cbPerfilConsumo.setOnAction(this::getPerfilConsumo);
+        if (SesionUsuario.session()) {
+            if (this.cbMetoPago == null) this.cbMetoPago = new ChoiceBox<String>();
 
-        if (SesionUsuario.session()){
+            this.cbMetoPago.getItems().addAll(this.metodosPago);
+            this.cbMetoPago.setOnAction(this::getMetoPago);
+
+            if (this.cbPerfilConsumo == null) this.cbPerfilConsumo = new ChoiceBox<String>();
+            this.cbPerfilConsumo.getItems().addAll(this.perfilesConsumo);
+            this.cbPerfilConsumo.setOnAction(this::getPerfilConsumo);
 
             Platform.runLater(new Runnable() {
                 @Override
@@ -115,7 +117,6 @@ public class RegisterController {
                     tfIngresosmensuales = new TextField(Double.toString(P.getIngresosmensuales()));
 
 
-
                     int index = Arrays.asList(perfilesConsumo).indexOf(cbPerfilConsumoSelected);
                     int index2 = Arrays.asList(metodosPago).indexOf(P.getMetodopagomasusado());
 
@@ -125,9 +126,7 @@ public class RegisterController {
             });
 
 
-
-
-        }else{
+        } else {
             this.lb_crearCuenta.setText("Crear Cuenta");
         }
 
@@ -180,9 +179,9 @@ public class RegisterController {
 
     @FXML
     void cambioCrearCuenta(ActionEvent event) {
-        if (SesionUsuario.session()){
+        if (SesionUsuario.session()) {
             new App().mostrarVista("DashBoard/DashBoard.fxml");
-        }else{
+        } else {
             new App().mostrarVista("Login/CrearCuenta.fxml");
         }
 
@@ -190,7 +189,7 @@ public class RegisterController {
 
     @FXML
     void guardarGastos(ActionEvent event) {
-        if (SesionUsuario.session()){
+        if (SesionUsuario.session()) {
 
             int index = Arrays.asList(this.perfilesConsumo).indexOf(this.cbPerfilConsumoSelected);
             String transporte = this.tfTransporte.getText(),
@@ -202,7 +201,7 @@ public class RegisterController {
                     perfilconsumo = Integer.toString(index);
             try {
                 Persona P = this.personaDao.getPersona(SesionUsuario.getUsuarioLog());
-                String[] datosStrToDbl = new String[]{ transporte, alimentacion, servicios, educacion, entretenimiento, personal, perfilconsumo};
+                String[] datosStrToDbl = new String[]{transporte, alimentacion, servicios, educacion, entretenimiento, personal, perfilconsumo};
 
                 double[] d = Arrays.stream(datosStrToDbl)
                         .mapToDouble(Double::parseDouble)
@@ -221,7 +220,7 @@ public class RegisterController {
                 System.out.println(e);
             }
 
-        }else{
+        } else {
             String[] datosStr = new String[]{part1[2].toString(), part1[3].toString(), part1[0].toString(), part1[1].toString(), part1[4].toString(), part1[7].toString()};
             int index = Arrays.asList(this.perfilesConsumo).indexOf(this.cbPerfilConsumoSelected);
             String telefono = part1[5].toString(),
@@ -241,7 +240,7 @@ public class RegisterController {
                     .toArray();
 
             try {
-                Persona personaNueva = new Persona(datosStr[0], datosStr[1], datosStr[2], datosStr[3], datosStr[4], datosDbl[0],datosDbl[1],datosDbl[2],datosDbl[3],datosDbl[4],datosDbl[5],datosDbl[6],datosDbl[7],0.0,datosDbl[8],datosStr[5]);
+                Persona personaNueva = new Persona(datosStr[0], datosStr[1], datosStr[2], datosStr[3], datosStr[4], datosDbl[0], datosDbl[1], datosDbl[2], datosDbl[3], datosDbl[4], datosDbl[5], datosDbl[6], datosDbl[7], 0.0, datosDbl[8], datosStr[5]);
 
                 this.personaDao.insertar(personaNueva);
 
@@ -251,7 +250,6 @@ public class RegisterController {
                 System.out.println(e);
             }
         }
-
 
 
     }

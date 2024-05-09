@@ -87,9 +87,9 @@ public class AgregarTransaccionController {
 
         try {
 
-            Transaccion ntransaccion = new Transaccion(this.transaccionesDAO.P.getId(), this.txtMonto.getText(), this.cbMetodoPagoSelected, this.cbTipoTransaccionSelected, this.txtNuevoPresupuesto.getText());
+            //Transaccion ntransaccion = new Transaccion(this.transaccionesDAO.P.getId(), this.txtMonto.getText(), this.cbMetodoPagoSelected, this.cbTipoTransaccionSelected, this.txtNuevoPresupuesto.getText());
 
-            this.transaccionesDAO.insertar(ntransaccion);
+           // this.transaccionesDAO.insertar(ntransaccion);
 
             System.out.println("¡Registro de datos exitoso!");
             new App().mostrarVista("DashBoard/DashBoard.fxml");
