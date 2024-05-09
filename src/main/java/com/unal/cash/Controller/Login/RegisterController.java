@@ -4,12 +4,10 @@ import com.unal.cash.App;
 import com.unal.cash.Database.datos.PersonaDAO;
 import com.unal.cash.Database.domain.Persona;
 import com.unal.cash.Model.Login.SesionUsuario;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -17,6 +15,7 @@ import java.util.Objects;
 public class RegisterController {
 
     public TextField tfNumeroDocumento;
+    public Label lb_crearCuenta;
     @FXML
     private Button btnContinueSignup;
 
@@ -95,19 +94,41 @@ public class RegisterController {
 
         if (SesionUsuario.session()){
 
-            Persona P = this.personaDao.getPersona(SesionUsuario.getUsuarioLog());
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    lb_crearCuenta = new Label("Editar Cuenta");
+                    System.out.println("SESSION USARIO == TRUE **********************************");
 
-            this.tfNombre.setText(P.getNombre());
-            this.tfApellido.setText(P.getApellido());
-            this.tfNewUser.setText(P.getUsuario());
-            this.tfEmail.setText(P.getEmail());
-            this.tfNumeroDocumento.setText(Double.toString(P.getIdPersona()));
-            this.tfTelefono.setText(Double.toString(P.getTelefono()));
-            this.tfIngresosmensuales.setText(Double.toString(P.getIngresosmensuales()));
+                    //Se llega desde el dashboard hasta gastos recurrentes
+
+                    Persona P = personaDao.getPersona(SesionUsuario.getUsuarioLog());
+                    System.out.println("persona p: " + P.toString());
+                    tfNombre = new TextField(P.getNombre());
+                    tfApellido = new TextField(P.getApellido());
+                    tfNewUser = new TextField(P.getUsuario());
+                    tfEmail = new TextField(P.getEmail());
+                    // Handle potential type mismatches for numeric fields:
+
+                    tfNumeroDocumento = new TextField(Double.toString(P.getIdPersona()));
+                    tfTelefono = new TextField(Double.toString(P.getTelefono()));
+                    tfIngresosmensuales = new TextField(Double.toString(P.getIngresosmensuales()));
+
+
+
+                    int index = Arrays.asList(perfilesConsumo).indexOf(cbPerfilConsumoSelected);
+                    int index2 = Arrays.asList(metodosPago).indexOf(P.getMetodopagomasusado());
+
+                    cbPerfilConsumo.setValue(cbPerfilConsumoSelected);
+                    cbMetoPago.getSelectionModel().select(index2);
+                }
+            });
 
 
 
 
+        }else{
+            this.lb_crearCuenta.setText("Crear Cuenta");
         }
 
     }

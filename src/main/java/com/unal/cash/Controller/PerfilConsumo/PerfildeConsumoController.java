@@ -57,8 +57,10 @@ public class PerfildeConsumoController {
         btlist.add(bt_5_20);
         btlist.add(bt_90_150);
         btlist.add(bt_MasDineroFinDe);
-        int indexConsumoActual = Integer.getInteger(Double.toString(P.getPerfilconsumo()));
-        labConsumoActual.setText("Perfil de consumo actual: "+ this.perfilesConsumo[indexConsumoActual]);
+
+        int indexConsumoActual = (int)P.getPerfilconsumo();
+        labConsumoActual = new Label("Perfil de consumo actual: "+ this.perfilesConsumo[indexConsumoActual]);
+//        labConsumoActual.setText();
     }
 
     @FXML

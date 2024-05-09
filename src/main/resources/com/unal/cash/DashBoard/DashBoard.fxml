@@ -8,7 +8,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unal.cash.Controller.DashBoardController">
+<AnchorPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unal.cash.Controller.DashBoard.DashBoardController">
    <children>
       <SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0">
         <items>
@@ -78,10 +78,10 @@
                <children>
                   <TableView fx:id="tbTabla" layoutX="78.0" layoutY="248.0" prefHeight="438.0" prefWidth="354.0">
                     <columns>
-                      <TableColumn prefWidth="119.0" text="Transacciones" />
-                      <TableColumn minWidth="1.6666259765625" prefWidth="56.33331298828125" text="Valor" />
-                        <TableColumn prefWidth="115.33331298828125" text="Método de Pago" />
-                        <TableColumn prefWidth="58.6666259765625" text="Fecha" />
+                      <TableColumn fx:id="col_id" prefWidth="119.0" text="Transacciones" />
+                      <TableColumn fx:id="col_monto" minWidth="1.6666259765625" prefWidth="56.33331298828125" text="Valor" />
+                        <TableColumn fx:id="col_metodo" prefWidth="115.33331298828125" text="Método de Pago" />
+                        <TableColumn fx:id="col_fecha" prefWidth="58.6666259765625" text="Fecha" />
                     </columns>
                   </TableView>
                   <Button fx:id="buttonAgregar" layoutX="197.0" layoutY="686.0" mnemonicParsing="false" onAction="#Agregar" prefHeight="25.0" prefWidth="115.0" style="-fx-background-color: #022B3A; -fx-text-fill: #FFFFFF;" text="Agregar">

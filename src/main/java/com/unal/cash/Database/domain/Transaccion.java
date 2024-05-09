@@ -8,6 +8,20 @@ public class Transaccion {
     private Date fecha_registro;
     private String monto;
     private String metodo_de_pago;
+
+    @Override
+    public String toString() {
+        return "Transaccion{" +
+                "id=" + id +
+                ", persona=" + persona +
+                ", fecha_registro=" + fecha_registro +
+                ", monto='" + monto + '\'' +
+                ", metodo_de_pago='" + metodo_de_pago + '\'' +
+                ", tipo_de_transaccion='" + tipo_de_transaccion + '\'' +
+                ", nuevo_presupuesto_diario='" + nuevo_presupuesto_diario + '\'' +
+                '}';
+    }
+
     private String tipo_de_transaccion;
     private String nuevo_presupuesto_diario;
 
@@ -75,5 +89,9 @@ public class Transaccion {
         this.metodo_de_pago = metodo_de_pago;
         this.tipo_de_transaccion = tipo_de_transaccion;
         this.nuevo_presupuesto_diario = nuevo_presupuesto_diario;
+    }
+
+    public int getId() {
+        return this.id;
     }
 }
