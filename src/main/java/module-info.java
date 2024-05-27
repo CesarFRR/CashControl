@@ -20,6 +20,8 @@ module com.unal.cash {
     opens com.unal.cash.Controller.MetodosdePago to javafx.fxml, javafx.base;
     opens com.unal.cash.Controller.RegistroIngresosMensuales to javafx.fxml, javafx.base;
     opens com.unal.cash.Controller.SobreNosotros to javafx.fxml, javafx.base;
+    exports com.unal.cash.Controller.InformacionPersonal to javafx.fxml;
+    opens com.unal.cash.Controller.InformacionPersonal to javafx.fxml;
 
 
 }

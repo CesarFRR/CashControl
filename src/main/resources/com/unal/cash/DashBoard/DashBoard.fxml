@@ -14,12 +14,12 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="798.0" prefWidth="386.0" style="-fx-background-color: #E1E5F2;">
                <children>
-                  <Button layoutX="24.0" layoutY="192.0" mnemonicParsing="false" onAction="#cambioIngresosMensuales" prefHeight="44.0" prefWidth="328.0" style="-fx-text-fill: #022B3A; -fx-background-color: #BFDBF7;" text="Ingresos Mensuales" AnchorPane.leftAnchor="28.0">
+                  <Button layoutX="24.0" layoutY="192.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="328.0" style="-fx-text-fill: #022B3A; -fx-background-color: #BFDBF7;" text="Ingresos Mensuales" AnchorPane.leftAnchor="28.0">
                      <font>
                         <Font name="Arial Bold Italic" size="18.0" />
                      </font>
                   </Button>
-                  <Button layoutX="28.0" layoutY="242.0" mnemonicParsing="false" onAction="#cambioGastosRecurrentes" prefHeight="44.0" prefWidth="328.0" style="-fx-text-fill: #022B3A; -fx-background-color: #BFDBF7;" text="Gastos Recurrentes">
+                  <Button layoutX="28.0" layoutY="242.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="328.0" style="-fx-text-fill: #022B3A; -fx-background-color: #BFDBF7;" text="Gastos Recurrentes">
                      <font>
                         <Font name="Arial Bold Italic" size="18.0" />
                      </font>

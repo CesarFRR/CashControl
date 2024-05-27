@@ -82,6 +82,7 @@ public class RegisterController {
     private TextField tfTransporte;
 
     private static Object[] part1;
+
     public void initialize() {
         if (this.cbMetoPago == null) this.cbMetoPago = new ChoiceBox<String>();
 
@@ -91,45 +92,6 @@ public class RegisterController {
         if (this.cbPerfilConsumo == null) this.cbPerfilConsumo = new ChoiceBox<String>();
         this.cbPerfilConsumo.getItems().addAll(this.perfilesConsumo);
         this.cbPerfilConsumo.setOnAction(this::getPerfilConsumo);
-
-        if (SesionUsuario.session()){
-
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    lb_crearCuenta = new Label("Editar Cuenta");
-                    System.out.println("SESSION USARIO == TRUE **********************************");
-
-                    //Se llega desde el dashboard hasta gastos recurrentes
-
-                    Persona P = personaDao.getPersona(SesionUsuario.getUsuarioLog());
-                    System.out.println("persona p: " + P.toString());
-                    tfNombre = new TextField(P.getNombre());
-                    tfApellido = new TextField(P.getApellido());
-                    tfNewUser = new TextField(P.getUsuario());
-                    tfEmail = new TextField(P.getEmail());
-                    // Handle potential type mismatches for numeric fields:
-
-                    tfNumeroDocumento = new TextField(Double.toString(P.getIdPersona()));
-                    tfTelefono = new TextField(Double.toString(P.getTelefono()));
-                    tfIngresosmensuales = new TextField(Double.toString(P.getIngresosmensuales()));
-
-
-
-                    int index = Arrays.asList(perfilesConsumo).indexOf(cbPerfilConsumoSelected);
-                    int index2 = Arrays.asList(metodosPago).indexOf(P.getMetodopagomasusado());
-
-                    cbPerfilConsumo.setValue(cbPerfilConsumoSelected);
-                    cbMetoPago.getSelectionModel().select(index2);
-                }
-            });
-
-
-
-
-        }else{
-            this.lb_crearCuenta.setText("Crear Cuenta");
-        }
 
     }
 
@@ -164,6 +126,9 @@ public class RegisterController {
 
     @FXML
     void continuarRegistro(ActionEvent event) {
+
+
+        //     public Persona(String usuario, String contraseña, String nombre, String apellido, String email, double telefono, double ingresosmensuales, double transporte, double alimentacion, double servicios, double educacion, double entretenimiento, double personal, double excedentefindemes, double perfilconsumo, String metodopagomasusado) {
         if (this.cbMetoPagoSelected == null) {
             this.cbMetoPagoSelected = "Efectivo";
         }
@@ -171,77 +136,28 @@ public class RegisterController {
             return;
         } else {
             String nombre = this.tfNombre.getText(), apellido = this.tfApellido.getText(), usuario = this.tfNewUser.getText(), contraseña = this.pfNewPassword.getText(), email = this.tfEmail.getText(), metodopagomasusado = this.cbMetoPagoSelected;
-            String telefono = this.tfTelefono.getText(), ingresosmensuales = this.tfIngresosmensuales.getText(), NumeroDocumento = this.tfNumeroDocumento.getText();
-            part1 = new Object[]{nombre, apellido, usuario, contraseña, email, telefono, ingresosmensuales, metodopagomasusado, NumeroDocumento};
-            new App().mostrarVista("Login/GastosRecurrentes.fxml");
-        }
-
-    }
-
-    @FXML
-    void cambioCrearCuenta(ActionEvent event) {
-        if (SesionUsuario.session()){
-            new App().mostrarVista("DashBoard/DashBoard.fxml");
-        }else{
-            new App().mostrarVista("Login/CrearCuenta.fxml");
-        }
-
-    }
-
-    @FXML
-    void guardarGastos(ActionEvent event) {
-        if (SesionUsuario.session()){
-
+            String telefono = this.tfTelefono.getText(), ingresosmensuales = this.tfIngresosmensuales.getText();
+            String[] datosStr = new String[]{usuario, contraseña, nombre, apellido, email, metodopagomasusado};
             int index = Arrays.asList(this.perfilesConsumo).indexOf(this.cbPerfilConsumoSelected);
-            String transporte = this.tfTransporte.getText(),
-                    alimentacion = this.tfAlimentacion.getText(),
-                    servicios = this.tfServicios.getText(),
-                    educacion = this.tfEducacion.getText(),
-                    entretenimiento = this.tfEntretenimiento.getText(),
-                    personal = this.tfPersonal.getText(),
-                    perfilconsumo = Integer.toString(index);
-            try {
-                Persona P = this.personaDao.getPersona(SesionUsuario.getUsuarioLog());
-                String[] datosStrToDbl = new String[]{ transporte, alimentacion, servicios, educacion, entretenimiento, personal, perfilconsumo};
-
-                double[] d = Arrays.stream(datosStrToDbl)
-                        .mapToDouble(Double::parseDouble)
-                        .toArray();
-                P.setTransporte(d[0]);
-                P.setAlimentacion(d[1]);
-                P.setServicios(d[2]);
-                P.setEducacion(d[3]);
-                P.setEntretenimiento(d[4]);
-                P.setPersonal(d[5]);
-                P.setPerfilconsumo(d[6]);
-                this.personaDao.actualizar(P);
-                System.out.println("Gastos actualizados con exito!");
-                new App().mostrarVista("DashBoard/DashBoard.fxml");
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-
-        }else{
-            String[] datosStr = new String[]{part1[2].toString(), part1[3].toString(), part1[0].toString(), part1[1].toString(), part1[4].toString(), part1[7].toString()};
-            int index = Arrays.asList(this.perfilesConsumo).indexOf(this.cbPerfilConsumoSelected);
-            String telefono = part1[5].toString(),
-                    ingresosmensuales = part1[6].toString(),
+            String
                     transporte = this.tfTransporte.getText(),
                     alimentacion = this.tfAlimentacion.getText(),
                     servicios = this.tfServicios.getText(),
                     educacion = this.tfEducacion.getText(),
                     entretenimiento = this.tfEntretenimiento.getText(),
                     personal = this.tfPersonal.getText(),
-                    perfilconsumo = Integer.toString(index),
-                    NumeroDocumento = part1[8].toString();
-            String[] datosStrToDbl = new String[]{telefono, ingresosmensuales, transporte, alimentacion, servicios, educacion, entretenimiento, personal, perfilconsumo, NumeroDocumento};
+                    perfilconsumo = Integer.toString(index);
+            String excedentefindemes = "0.0";
+            String[] datosStrToDbl = new String[]{telefono, ingresosmensuales, transporte, alimentacion, servicios, educacion, entretenimiento, personal, excedentefindemes, perfilconsumo};
             System.out.println("datosStrToDbl: " + Arrays.toString(datosStrToDbl));
             double[] datosDbl = Arrays.stream(datosStrToDbl)
                     .mapToDouble(Double::parseDouble)
                     .toArray();
 
             try {
-                Persona personaNueva = new Persona(datosStr[0], datosStr[1], datosStr[2], datosStr[3], datosStr[4], datosDbl[0],datosDbl[1],datosDbl[2],datosDbl[3],datosDbl[4],datosDbl[5],datosDbl[6],datosDbl[7],0.0,datosDbl[8],datosStr[5]);
+                //     public Persona(String usuario, String contraseña, String nombre, String apellido, String email, double telefono, double ingresosmensuales, double transporte, double alimentacion, double servicios, double educacion, double entretenimiento, double personal, double excedentefindemes, double perfilconsumo, String metodopagomasusado) {
+
+                Persona personaNueva = new Persona(datosStr[0], datosStr[1], datosStr[2], datosStr[3], datosStr[4], datosDbl[0], datosDbl[1], datosDbl[2], datosDbl[3], datosDbl[4], datosDbl[5], datosDbl[6], datosDbl[7], datosDbl[8], datosDbl[9], datosStr[5]);
 
                 this.personaDao.insertar(personaNueva);
 
@@ -250,9 +166,77 @@ public class RegisterController {
             } catch (Exception e) {
                 System.out.println(e);
             }
+
         }
 
-
-
     }
+
+
+//    @FXML
+//    void guardarGastos(ActionEvent event) {
+//        if (SesionUsuario.session()){
+//
+//            int index = Arrays.asList(this.perfilesConsumo).indexOf(this.cbPerfilConsumoSelected);
+//            String transporte = this.tfTransporte.getText(),
+//                    alimentacion = this.tfAlimentacion.getText(),
+//                    servicios = this.tfServicios.getText(),
+//                    educacion = this.tfEducacion.getText(),
+//                    entretenimiento = this.tfEntretenimiento.getText(),
+//                    personal = this.tfPersonal.getText(),
+//                    perfilconsumo = Integer.toString(index);
+//            try {
+//                Persona P = this.personaDao.getPersona(SesionUsuario.getUsuarioLog());
+//                String[] datosStrToDbl = new String[]{ transporte, alimentacion, servicios, educacion, entretenimiento, personal, perfilconsumo};
+//
+//                double[] d = Arrays.stream(datosStrToDbl)
+//                        .mapToDouble(Double::parseDouble)
+//                        .toArray();
+//                P.setTransporte(d[0]);
+//                P.setAlimentacion(d[1]);
+//                P.setServicios(d[2]);
+//                P.setEducacion(d[3]);
+//                P.setEntretenimiento(d[4]);
+//                P.setPersonal(d[5]);
+//                P.setPerfilconsumo(d[6]);
+//                this.personaDao.actualizar(P);
+//                System.out.println("Gastos actualizados con exito!");
+//                new App().mostrarVista("DashBoard/DashBoard.fxml");
+//            } catch (Exception e) {
+//                System.out.println(e);
+//            }
+//
+//        }else{
+//            String[] datosStr = new String[]{part1[2].toString(), part1[3].toString(), part1[0].toString(), part1[1].toString(), part1[4].toString(), part1[7].toString()};
+//            int index = Arrays.asList(this.perfilesConsumo).indexOf(this.cbPerfilConsumoSelected);
+//            String telefono = part1[5].toString(),
+//                    ingresosmensuales = part1[6].toString(),
+//                    transporte = this.tfTransporte.getText(),
+//                    alimentacion = this.tfAlimentacion.getText(),
+//                    servicios = this.tfServicios.getText(),
+//                    educacion = this.tfEducacion.getText(),
+//                    entretenimiento = this.tfEntretenimiento.getText(),
+//                    personal = this.tfPersonal.getText(),
+//                    perfilconsumo = Integer.toString(index),
+//                    NumeroDocumento = part1[8].toString();
+//            String[] datosStrToDbl = new String[]{telefono, ingresosmensuales, transporte, alimentacion, servicios, educacion, entretenimiento, personal, perfilconsumo, NumeroDocumento};
+//            System.out.println("datosStrToDbl: " + Arrays.toString(datosStrToDbl));
+//            double[] datosDbl = Arrays.stream(datosStrToDbl)
+//                    .mapToDouble(Double::parseDouble)
+//                    .toArray();
+//
+//            try {
+//                Persona personaNueva = new Persona(datosStr[0], datosStr[1], datosStr[2], datosStr[3], datosStr[4], datosDbl[0],datosDbl[1],datosDbl[2],datosDbl[3],datosDbl[4],datosDbl[5],datosDbl[6],datosDbl[7],0.0,datosDbl[8],datosStr[5]);
+//
+//                this.personaDao.insertar(personaNueva);
+//
+//                System.out.println("¡Registro de datos exitoso!");
+//                new App().mostrarVista("Login/InicioSesion.fxml");
+//            } catch (Exception e) {
+//                System.out.println(e);
+//            }
+//        }
+//
+//
+//
+//    }
 }

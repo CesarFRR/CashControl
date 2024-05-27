@@ -61,7 +61,6 @@ public class Persona {
         this.excedentefindemes = excedentefindemes;
         this.perfilconsumo = perfilconsumo;
         this.metodopagomasusado = metodopagomasusado;
-        this.idPersona = idPersona;
     }
 
 

@@ -175,7 +175,7 @@ public class DashBoardController {
 
     public void cambioActualizarInformacion(ActionEvent actionEvent) {
         if (SesionUsuario.session()) {
-            new App().mostrarVista("Login/CrearCuenta.fxml");
+            new App().mostrarVista("InformacionPersonal/ModificarInfo.fxml");
 
         }
     }
