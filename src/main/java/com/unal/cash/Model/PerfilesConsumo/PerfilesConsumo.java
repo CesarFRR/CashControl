@@ -1,5 +1,7 @@
 package com.unal.cash.Model.PerfilesConsumo;
 
+import com.unal.cash.Model.Login.*;                            //NUEVO IMPORT
+import com.unal.cash.Model.JSON.JsonCRUD;                      //NUEVO IMPORT
 import java.util.HashMap;
 import java.util.Map;
 import java.text.DecimalFormat;
@@ -67,12 +69,20 @@ public class PerfilesConsumo {
         return porcentajesAhrrInvrsn;
     }
    
-
+    // NUEVO MÉTODO PARA OBTENER EL EXCEDENTE MENSUAL
+    public double getExcedenteMensual(double ingresosMensuales, double gastosRecurrentes){
+        double sumaMontosFinales = JsonCRUD.obtenerSumaMontosFinalesUsuario(SesionUsuario.getUsuarioLog());    // NUEVA VARIABLE DE LOS MONTOS DE LAS TRANSACCIONES
+        double excedenteMensual = ingresosMensuales - gastosRecurrentes - sumaMontosFinales;                   // ACA SE LE RESTA LA NUEVA VARIABLE
+        return excedenteMensual;
+    }
+            
     public Map<String, Double> calcularDistribucionSemanal() {
+        double sumaMontosFinales = JsonCRUD.obtenerSumaMontosFinalesUsuario(SesionUsuario.getUsuarioLog());  // NUEVA VARIABLE DE LOS MONTOS DE LAS TRANSACCIONES
+        
         Map<String, Double> distribucionSemanal = new HashMap<>();
 
         // Calcular el excedente mensual disponible para distribuir
-        double excedenteMensual = ingresosMensuales - gastosRecurrentes;
+        double excedenteMensual = ingresosMensuales - gastosRecurrentes - sumaMontosFinales;    // ACA SE LE RESTA LA NUEVA VARIABLE
         double ahorroMensual = excedenteMensual * porcentajeAhorro;
         double inversionMensual = excedenteMensual * porcentajeInversion;
         double presupuestoSemanal = ingresosMensuales - ahorroMensual - inversionMensual;

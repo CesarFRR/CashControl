@@ -76,7 +76,7 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="798.0" prefWidth="927.0">
                <children>
-                  <TableView fx:id="tbTabla" layoutX="78.0" layoutY="248.0" prefHeight="438.0" prefWidth="354.0">
+                  <TableView fx:id="tbTabla" layoutX="13.0" layoutY="248.0" prefHeight="485.0" prefWidth="463.0">
                     <columns>
                       <TableColumn fx:id="col_id" prefWidth="119.0" text="Transacciones" />
                       <TableColumn fx:id="col_monto" minWidth="1.6666259765625" prefWidth="56.33331298828125" text="Valor" />
@@ -84,7 +84,7 @@
                         <TableColumn fx:id="col_fecha" prefWidth="58.6666259765625" text="Fecha" />
                     </columns>
                   </TableView>
-                  <Button fx:id="buttonAgregar" layoutX="197.0" layoutY="686.0" mnemonicParsing="false" onAction="#Agregar" prefHeight="25.0" prefWidth="115.0" style="-fx-background-color: #022B3A; -fx-text-fill: #FFFFFF;" text="Agregar">
+                  <Button fx:id="buttonAgregar" layoutX="194.0" layoutY="742.0" mnemonicParsing="false" onAction="#Agregar" prefHeight="25.0" prefWidth="115.0" style="-fx-background-color: #022B3A; -fx-text-fill: #FFFFFF;" text="Agregar">
                      <font>
                         <Font size="14.0" />
                      </font>

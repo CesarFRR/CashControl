@@ -5,7 +5,8 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class Item {
     private int id;
-    private int monto;
+    private double monto;
+    private double montoFinal;
     private String metodoDePago;
     private String fecha;
 
@@ -18,11 +19,11 @@ public class Item {
         this.id = id;
     }
 
-    public int getMonto() {
+    public double getMonto() {
         return monto;
     }
 
-    public void setMonto(int monto) {
+    public void setMonto(double monto) {
         this.monto = monto;
     }
 
@@ -40,5 +41,14 @@ public class Item {
 
     public void setFecha(String fecha) {
         this.fecha = fecha;
+    }
+
+
+    public double getMontoFinal() {
+        return montoFinal;
+    }
+
+    public void setMontoFinal(double montoFinal) {
+        this.montoFinal = montoFinal;
     }
 }

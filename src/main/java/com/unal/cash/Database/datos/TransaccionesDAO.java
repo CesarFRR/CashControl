@@ -1,8 +1,7 @@
 package com.unal.cash.Database.datos;
 
 import com.unal.cash.Database.domain.Persona;
-import com.unal.cash.Database.domain.Transaccion;
-import com.unal.cash.Model.Login.SesionUsuario;
+import com.unal.cash.Model.tranYmetpago.Transaccion;import com.unal.cash.Model.Login.SesionUsuario;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

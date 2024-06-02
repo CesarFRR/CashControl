@@ -56,7 +56,6 @@ public class Registroinfo {
                 System.out.println("\nUsuario inválido, ya está en uso. Por favor ingrese uno nuevo.");
                 continue;
             } else {
-
                 break;
             }
         }
@@ -72,9 +71,6 @@ public class Registroinfo {
                 continue;
             }
         }
-
-
-
         while (true){
         System.out.print("\nIngrese su correo electrónico: ");
         email = sc.nextLine();
@@ -90,7 +86,7 @@ public class Registroinfo {
         System.out.print("\nIngrese su método de pago más usado (ej: Tarjeta Débito): ");
         metodopagomasusado = sc.nextLine();
 
-        datosStr = new String[]{nombre, apellido, usuario, contraseña, email, metodopagomasusado};
+        datosStr = new String[]{nombre, apellido, usuario, contraseña, email, metodopagomasusado};  
     }
     
     public String[] getdatosStr(){
@@ -98,28 +94,6 @@ public class Registroinfo {
     }
     
     public void ingresoinfoDouble(){
-        String n_doc = "";
-
-//        while(true){
-//            System.out.print("\nIngrese su número de documento: ");
-//            n_doc = sc.nextLine();
-//            boolean validacionUsuario = false;
-//            List<Persona> personas = personaDao.seleccionar();
-//            for (Persona persona: personas){
-//                if (persona.getIdPersona()==Double.parseDouble(n_doc) ){
-//                    validacionUsuario = true;
-//                }
-//            }
-//            if (validacionUsuario){
-//                System.out.println("\nnúmero de documento, ya está en uso. Por favor ingrese uno nuevo.");
-//                continue;
-//            } else {
-//
-//                System.out.println("N_DOC COMO SERIA STRING: " + n_doc + " COMO SERIA DOUBLE: " + Double.parseDouble(n_doc));
-//                break;
-//            }
-//        }
-
         while (true){
             System.out.print("\nIngrese su telefono: ");
             try{

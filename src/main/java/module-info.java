@@ -2,7 +2,8 @@ module com.unal.cash {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
-    requires javafx.graphics; // **Agrega javafx.graphics**
+    requires javafx.graphics;
+    requires json.simple; // **Agrega javafx.graphics**
 
 
     exports com.unal.cash.Controller to javafx.fxml; // Provide access for FXML

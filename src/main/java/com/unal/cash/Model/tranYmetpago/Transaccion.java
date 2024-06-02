@@ -1,16 +1,99 @@
 package com.unal.cash.Model.tranYmetpago;
 /*
 Esta clase permite que el usuario registre aquellas transacciones, las cuales son exclusivamente EGRESOS y además
-que superan el presupuesto diario sugerido por la aplicación. 
+que superan el presupuesto diario sugerido por la aplicación.
 */
-import JSON.JsonCRUD;
-import Login.SesionUsuario;
+import com.unal.cash.Model.JSON.JsonCRUD;
+import com.unal.cash.Model.Login.SesionUsuario;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Transaccion {
 
+    private String usuario;
+    private String fecha;
+    private String tipoTransaccion;
+    private double monto;
+    private double intereses;
+    private double cashback;
+    private double descuento;
+    private double costoTransaccion;
+    private double montoFinal;
+
+    // Getters y setters para cada campo...
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getTipoTransaccion() {
+        return tipoTransaccion;
+    }
+
+    public void setTipoTransaccion(String tipoTransaccion) {
+        this.tipoTransaccion = tipoTransaccion;
+    }
+
+    public double getMonto() {
+        return monto;
+    }
+
+    public void setMonto(double monto) {
+        this.monto = monto;
+    }
+
+    public double getIntereses() {
+        return intereses;
+    }
+
+    public void setIntereses(double intereses) {
+        this.intereses = intereses;
+    }
+
+    public double getCashback() {
+        return cashback;
+    }
+
+    public void setCashback(double cashback) {
+        this.cashback = cashback;
+    }
+
+    public double getDescuento() {
+        return descuento;
+    }
+
+    public void setDescuento(double descuento) {
+        this.descuento = descuento;
+    }
+
+    public double getCostoTransaccion() {
+        return costoTransaccion;
+    }
+
+    public void setCostoTransaccion(double costoTransaccion) {
+        this.costoTransaccion = costoTransaccion;
+    }
+
+    public double getMontoFinal() {
+        return montoFinal;
+    }
+
+    public void setMontoFinal(double montoFinal) {
+        this.montoFinal = montoFinal;
+    }
     public Transaccion() {
     }
     
@@ -90,5 +173,20 @@ public class Transaccion {
     // Método que calcula el monto final de la transacción ya teniendo en cuenta todos los parámetros digitados por el usuario
     private double calcularMontoFinal(double monto, double intereses, double cashback, double descuento, double costoTransaccion) {
         return monto + intereses - cashback - descuento + costoTransaccion;
+    }
+
+    @Override
+    public String toString() {
+        return "Transaccion{" +
+                "usuario='" + usuario + '\'' +
+                ", fecha='" + fecha + '\'' +
+                ", tipoTransaccion='" + tipoTransaccion + '\'' +
+                ", monto=" + monto +
+                ", intereses=" + intereses +
+                ", cashback=" + cashback +
+                ", descuento=" + descuento +
+                ", costoTransaccion=" + costoTransaccion +
+                ", montoFinal=" + montoFinal +
+                '}';
     }
 }

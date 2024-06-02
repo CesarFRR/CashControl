@@ -10,7 +10,7 @@ public class ConsultaInfo {
     PersonaDAO personaDao = new PersonaDAO();
     PerfilesConsumo porcentajes = new PerfilesConsumo();
     private static final String[] DIAS_SEMANA = {"Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"};
-    
+
     public ConsultaInfo() {
     }
 
@@ -18,6 +18,7 @@ public class ConsultaInfo {
         String usuario = SesionUsuario.getUsuarioLog();
         String[] datosStr = personaDao.SeleccionarUnoDS(usuario);
         double[] datosDbl = personaDao.SeleccionarUnoDDouble(usuario);
+        PerfilesConsumo objExc = new PerfilesConsumo();                          // NUEVA INSTANCIA DE OBJETO
 
         String contraseña = datosStr[1];
         String nombre = datosStr[2];
@@ -37,6 +38,7 @@ public class ConsultaInfo {
         double[] porcentajesAI = porcentajes.porcentajesAhorroEInversion();
         double porcentajeAhorro = porcentajesAI[0];
         double porcentajeInversion = porcentajesAI[1];
+        double excedenteMensual = objExc.getExcedenteMensual(ingresosmensuales, gastosRecurrentes);          // NUEVO PARAMETRO
 
         String contraseñaOculta = contraseña.replaceAll(".", "*"); // Reemplazar cada letra por un asterisco
 
@@ -51,40 +53,41 @@ public class ConsultaInfo {
         System.out.println("Ingresos mensuales:_____________$ " + ingresosmensuales);
         System.out.println("Gasto mensual en transporte:____$ " + transporte);
         System.out.println("Gasto mensual en alimentación:__$ " + alimentacion);
-        System.out.println("Gasto mensual en servicios:__$ " + servicios);
+        System.out.println("Gasto mensual en servicios:_____$ " + servicios);
         System.out.println("Gasto mensual en servicios:_____$ " + educacion);
         System.out.println("Gasto mensual en entretenimiento:$ " + entretenimiento);
         System.out.println("Gasto mensual personal:_________$ " + personal);
-        
-        
-            // Imprimir perfil de consumo y presupuesto por día
-            switch (perfilconsumo){
-                case 1:
-                    System.out.println("Perfil de consumo:______________" + "Constante");
-                    break;
-                case 2:
-                    System.out.println("Perfil de consumo:______________" + "Fin de semana gastador");
-                    break;
-                case 3:
-                    System.out.println("Perfil de consumo:______________" + "Entre semana gastador");
-                    break;
-                case 4:
-                    System.out.println("Perfil de consumo:______________" + "Viernes gastador");
-                    break;
-            }
-            
-            
-            // Crear instancia de PerfilesConsumo
-            PerfilesConsumo objPerfilConsumo = new PerfilesConsumo (ingresosmensuales, gastosRecurrentes, porcentajeAhorro, porcentajeInversion, perfilconsumo);
-            // Calcular distribución semanal y obtener presupuesto por día
-            Map<String, Double> distribucionSemanal = objPerfilConsumo.calcularDistribucionSemanal();
-            
-            // Mostrar distribución semanal de gastos
-            System.out.println("\nDistribucion semanal de gastos (presupuesto diario):");
-            
-            for (String dia : DIAS_SEMANA) {
-                System.out.println(dia + ": $" + Math.round(distribucionSemanal.get(dia)));
-            }
+
+
+        // Imprimir perfil de consumo y presupuesto por día
+        switch (perfilconsumo){
+            case 1:
+                System.out.println("Perfil de consumo:______________" + "Constante");
+                break;
+            case 2:
+                System.out.println("Perfil de consumo:______________" + "Fin de semana gastador");
+                break;
+            case 3:
+                System.out.println("Perfil de consumo:______________" + "Entre semana gastador");
+                break;
+            case 4:
+                System.out.println("Perfil de consumo:______________" + "Viernes gastador");
+                break;
+        }
+
+        System.out.println("Excendente mensual:_________$ " + excedenteMensual);      // NUEVO PRINT
+
+        // Crear instancia de PerfilesConsumo
+        PerfilesConsumo objPerfilConsumo = new PerfilesConsumo (ingresosmensuales, gastosRecurrentes, porcentajeAhorro, porcentajeInversion, perfilconsumo);
+        // Calcular distribución semanal y obtener presupuesto por día
+        Map<String, Double> distribucionSemanal = objPerfilConsumo.calcularDistribucionSemanal();
+
+        // Mostrar distribución semanal de gastos
+        System.out.println("\nDistribucion semanal de gastos (presupuesto diario):");
+
+        for (String dia : DIAS_SEMANA) {
+            System.out.println(dia + ": $" + Math.round(distribucionSemanal.get(dia)));
         }
     }
+}
 

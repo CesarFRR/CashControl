@@ -3,7 +3,8 @@ package com.unal.cash.Controller.DashBoard;
 import com.unal.cash.App;
 import com.unal.cash.Database.datos.PersonaDAO;
 import com.unal.cash.Database.datos.TransaccionesDAO;
-import com.unal.cash.Database.domain.Transaccion;
+import com.unal.cash.Model.JSON.JsonCRUD;
+import com.unal.cash.Model.tranYmetpago.Transaccion;
 import com.unal.cash.Model.Login.SesionUsuario;
 import com.unal.cash.Model.PerfilesConsumo.PerfilesConsumo;
 import javafx.collections.FXCollections;
@@ -97,47 +98,54 @@ public class DashBoardController {
         this.setTxtExcedenteFinDeMes("$" + FExcedenteFinDeMes);
 
 //TODO:  get form json
-        //List<Transaccion> trlist = this.transaccionesDAO.seleccionar();
-//
-//        for (Transaccion t : trlist) {
-//            Item n = new Item();
-//            n.setId(1);
-//            n.setMonto(Integer.parseInt(t.getMonto()));
-//            n.setMetodoDePago(t.getMetodo_de_pago());
-//            n.setFecha(t.getFecha_registro().toString());
-//
-//            this.items.add(n); // Add the Item object to the ArrayList
-//            System.out.println("trlist: \n" + t.toString());
-//            System.out.println("items: \n" + n.toString());
-//        }
-//        TableColumn<Item, Integer> idCol = new TableColumn<>("ID");
-//        idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-//
-//        TableColumn<Item, String> montoCol = new TableColumn<>("Valor");
-//        montoCol.setCellValueFactory(new PropertyValueFactory<>("monto"));
-//
-//        TableColumn<Item, String> metodoPagoCol = new TableColumn<>("Método de Pago");
-//        metodoPagoCol.setCellValueFactory(new PropertyValueFactory<>("metodoDePago"));
-//
-//        TableColumn<Item, String> fechaCol = new TableColumn<>("Fecha");
-//        fechaCol.setCellValueFactory(new PropertyValueFactory<>("fecha"));
+        List<Transaccion> trlist = JsonCRUD.getTransaccionesList(usuario);
+        int index=1;
+        for (Transaccion t : trlist) {
+            Item n = new Item();
 
-//        this.col_id.setCellValueFactory(new PropertyValueFactory<Item, Integer>("id"));
-//
-//        this.col_monto.setCellValueFactory(new PropertyValueFactory<Item, Integer>("monto"));
-//
-//        this.col_metodo.setCellValueFactory(new PropertyValueFactory<Item, String>("metodoDePago"));
-//
-//        this.col_fecha.setCellValueFactory(new PropertyValueFactory<Item, String>("fecha"));
+            n.setId(index);
+            n.setMonto(t.getMonto());
+            n.setMetodoDePago(t.getTipoTransaccion());
+            n.setFecha(t.getFecha());
+            n.setMontoFinal(t.getMontoFinal());
+
+            this.items.add(n); // Add the Item object to the ArrayList
+            System.out.println("trlist: \n" + t.toString());
+            System.out.println("items: \n" + n.toString());
+            index++;
+        }
+        TableColumn<Item, Integer> idCol = new TableColumn<>("ID");
+        idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+
+        TableColumn<Item, String> montoCol = new TableColumn<>("Monto");
+        montoCol.setCellValueFactory(new PropertyValueFactory<>("monto"));
+
+        TableColumn<Item, String> metodoPagoCol = new TableColumn<>("Método de Pago");
+        metodoPagoCol.setCellValueFactory(new PropertyValueFactory<>("metodoDePago"));
+
+        TableColumn<Item, String> fechaCol = new TableColumn<>("Fecha");
+        fechaCol.setCellValueFactory(new PropertyValueFactory<>("fecha"));
+
+        TableColumn<Item, String> montoFinalCol = new TableColumn<>("Monto Final");
+        montoFinalCol.setCellValueFactory(new PropertyValueFactory<>("montoFinal"));
+
+        this.col_id.setCellValueFactory(new PropertyValueFactory<Item, Integer>("id"));
+
+        this.col_monto.setCellValueFactory(new PropertyValueFactory<Item, Double>("monto"));
+
+        this.col_metodo.setCellValueFactory(new PropertyValueFactory<Item, String>("metodoDePago"));
+
+        this.col_fecha.setCellValueFactory(new PropertyValueFactory<Item, String>("fecha"));
 
 
-//        this.tbTabla.getColumns().clear();
-//        this.tbTabla.getColumns().addAll(idCol, montoCol, metodoPagoCol, fechaCol);
+        this.tbTabla.getColumns().clear();
+        this.tbTabla.getColumns().addAll(idCol, montoCol, metodoPagoCol, montoFinalCol, fechaCol);
 //        TableColumn<?, ?> unnamedColumn = this.tbTabla.getColumns().getLast(); // Replace 'index' with the actual column index
-//        unnamedColumn.setVisible(false);
-// Set the items list of the TableView to the ArrayList of Item objects
-        //this.tbTabla.setItems(FXCollections.observableArrayList(items));
-
+//                unnamedColumn.setVisible(false);
+         //Set the items list of the TableView to the ArrayList of Item objects
+        this.tbTabla.setItems(FXCollections.observableArrayList(items));
+        List<Transaccion> listaT = JsonCRUD.getTransaccionesList(usuario);
+        System.out.println("Lista de transacciones para este usario: \n" + listaT);
 
     }
 

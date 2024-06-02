@@ -2,9 +2,7 @@ package com.unal.cash.Model.Login;
 
 import com.unal.cash.Database.datos.PersonaDAO;
 import com.unal.cash.Database.domain.Persona;
-//import menusConsola.Menusbscs;
 import java.util.*;
-import com.unal.cash.Model.Login.SesionUsuario;
 
 public class LoginIS {
     public String usuario;

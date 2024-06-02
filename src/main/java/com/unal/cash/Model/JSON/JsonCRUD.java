@@ -3,21 +3,38 @@ package com.unal.cash.Model.JSON;
 Esta clase es para la conexión y manipulación del archivo tipo JSON, donde guardamos todos los datos de las transacciones.
 Es decir que funciona como una especie de base de datos.
 */
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
+import java.util.ArrayList;
+import com.unal.cash.Model.tranYmetpago.Transaccion;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 public class JsonCRUD {
-    private static final String RUTA_ARCHIVO_JSON = "ArchivoJson.json";
-    
+    private static final String NOMBRE_JSON = "Transacciones.json";
+    private static final String RUTA_PADRE = System.getProperty("user.dir") + "/src/main/java/com/unal/cash/Database/";
+    private static final String RUTA_ARCHIVO_JSON = RUTA_PADRE + NOMBRE_JSON;
+
+    // Bloque de inicialización estática
+    static {
+        File file = new File(RUTA_ARCHIVO_JSON);
+        if (!file.exists()) {
+            try {
+                // Si el archivo no existe, crearlo
+                file.createNewFile();
+                System.out.println("Archivo creado: " + file.getName());
+            } catch (IOException e) {
+                System.out.println("Error al crear el archivo.");
+                e.printStackTrace();
+            }
+        }
+    }
+
     // Método que lee el JSON y extrae toda su información
     public static String obtenerJSONDesdeArchivo() {
+        System.out.println("ruta actual: " + System.getProperty("user.dir"));
         StringBuilder textoJSON = new StringBuilder();
         try (BufferedReader lector = new BufferedReader(new FileReader(RUTA_ARCHIVO_JSON))) {
             String linea;
@@ -90,8 +107,45 @@ public class JsonCRUD {
         
     }
 
+    public static List<Transaccion> getTransaccionesList(String usuario) {
+        List<Transaccion> transacciones = new ArrayList<>();
+        String strJson = obtenerJSONDesdeArchivo();
+        try {
+            JSONParser parser = new JSONParser();
+            Object objeto = parser.parse(strJson);
+            JSONArray jsonArray = (JSONArray) objeto;
+
+            // Iterar sobre cada transacción en el JSON
+            for (Object obj : jsonArray) {
+                JSONObject jsonObj = (JSONObject) obj;
+                if (jsonObj.get("usuario").equals(usuario)){
+                    // Crear una nueva transacción y asignarle los datos
+                    Transaccion transaccion = new Transaccion();
+                    transaccion.setUsuario(usuario);
+                    transaccion.setFecha((String) jsonObj.get("fecha"));
+                    transaccion.setTipoTransaccion((String) jsonObj.get("tipoTransaccionStr"));
+                    transaccion.setMonto((double) jsonObj.get("monto"));
+                    transaccion.setIntereses((double) jsonObj.get("intereses"));
+                    transaccion.setCashback((double) jsonObj.get("cashback"));
+                    transaccion.setDescuento((double) jsonObj.get("descuento"));
+                    transaccion.setCostoTransaccion((double) jsonObj.get("costoTransaccion"));
+                    transaccion.setMontoFinal((double) jsonObj.get("montoFinal"));
+
+                    // Agregar la transacción a la lista
+                    transacciones.add(transaccion);
+                }
+            }
+        } catch (ParseException ex) {
+            ex.printStackTrace(); // Manejo básico de excepciones
+        }
+
+        return transacciones;
+    }
+
     // Método para subir información al archivo tipo JSON
     public static void agregarEntradaAlJSON(List<String> datos, double montoFinal) {
+
+        System.out.println("LISTA DE DATOS: " + datos);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("usuario", datos.get(0));
         jsonObject.put("fecha", datos.get(1));

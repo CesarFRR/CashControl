@@ -1,11 +1,16 @@
 package com.unal.cash.Model.mainConsola;
 
+//import JSON.JsonCRUD;
+//import tranYmetpago.Transaccion;
 import java.util.Scanner;
+
 import com.unal.cash.Model.menusConsola.Menusbscs;
+//import tranYmetpago.Transaccion;
 
 public class App {
 
     public static void main(String[] args) {
+        
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
 
@@ -17,7 +22,7 @@ public class App {
             int opcionInicio = menus.obtenerOpcion(2);
 
             switch (opcionInicio) {
-                case 1 ->menus.menuIniciarSesion();
+                case 1 -> menus.menuIniciarSesion();
                 case 2 -> menus.menuCrearCuenta();
                 case 0 -> running = false;
             }
@@ -31,7 +36,6 @@ public class App {
         }
 
         System.out.println("\nGracias por usar Cash Control");
-    }
 
-    
+    }  
 }
