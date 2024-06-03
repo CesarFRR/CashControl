@@ -5,9 +5,16 @@ que superan el presupuesto diario sugerido por la aplicación.
 */
 import com.unal.cash.Model.JSON.JsonCRUD;
 import com.unal.cash.Model.Login.SesionUsuario;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import javafx.scene.control.DatePicker;
 
 public class Transaccion {
 
@@ -33,6 +40,17 @@ public class Transaccion {
 
     public String getFecha() {
         return fecha;
+    }
+    public Date _getFecha() {
+        // parsear string fecha dd/MM/yyyy a Date
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = null;
+        try {
+            date = sdf.parse(fecha);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        return date;
     }
 
     public void setFecha(String fecha) {

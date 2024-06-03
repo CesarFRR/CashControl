@@ -55,12 +55,10 @@ public class RegisterController {
     private String cbPerfilConsumoSelected;
 
     private final String[] perfilesConsumo = {
-            "Gasto dinero todos los dias entre 5.000 - 20.000",
-            "Gasto dinero todos los dias entre 20.000 - 50.000",
-            "Gasto dinero todos los dias entre 50.000 - 90.000",
-            "Gasto dinero todos los dias entre 90.000 - 150.000",
-            "Todos los días gasto más de 150.000",
-            "Gasto más dinero el fin de semana"};
+            "Constante",
+            "Fin de semana gastador",
+            "Entre semana gastador",
+            "Viernes gastador"};
 
 
     @FXML

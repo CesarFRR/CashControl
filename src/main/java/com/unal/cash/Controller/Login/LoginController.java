@@ -66,7 +66,7 @@ public class LoginController {
 
             System.out.print("DATOS DESDE CUALQUIER LUGAR ACCESIBLES: " + SesionUsuario.getUsuarioLog());
 
-            new App().mostrarVista("DashBoard/DashBoard.fxml");
+            new App().mostrarVista("AfterLoginData/AfterLogin.fxml");
 
         }
     }

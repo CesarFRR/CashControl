@@ -10,18 +10,22 @@ import com.unal.cash.Model.PerfilesConsumo.PerfilesConsumo;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Group;
 import javafx.scene.chart.BarChart;
+import javafx.scene.chart.LineChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.List;
+import java.util.*;
+
+import javafx.scene.chart.XYChart;
 import javafx.collections.ObservableList; // Import ObservableList
+
 
 public class DashBoardController {
     public Button btLogout;
@@ -29,6 +33,8 @@ public class DashBoardController {
     public TableColumn col_monto;
     public TableColumn col_metodo;
     public TableColumn col_fecha;
+    public BarChart chart_distribucionSemanal;
+    public LineChart chart_resumenTransacciones;
     @FXML
     private TableView<Item> tbTabla;
     @FXML
@@ -54,12 +60,16 @@ public class DashBoardController {
     PerfilesConsumo porcentajes = new PerfilesConsumo();
     private TransaccionesDAO transaccionesDAO = new TransaccionesDAO();
     ArrayList<Item> items = new ArrayList<>();
+    private  String[] DIAS_SEMANA = {"Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"};
 
     public DashBoardController() {
 
     }
 
     public void initialize() {
+        String[] diasDeLaSemana = this.DIAS_SEMANA;
+        Collection<Double> _precios = SesionUsuario.getPerfilStatus().getDistribucionSemanal().values();
+        double[] precios_semana = _precios.stream().mapToDouble(Double::doubleValue).toArray();
         // You can access and modify the elements here before the view is shown.
         // For example, to set the text of txtUsername:
 
@@ -80,24 +90,55 @@ public class DashBoardController {
         double educacion = datosDbl[6];
         double entretenimiento = datosDbl[7];
         double personal = datosDbl[8];
-        int perfilconsumo = (int) datosDbl[10];
+        int perfilconsumo = (int) datosDbl[10]+1;
         double gastosRecurrentes = datosDbl[3] + datosDbl[4] + datosDbl[5] + datosDbl[6] + datosDbl[7] + datosDbl[8];
-        //double[] porcentajesAI = porcentajes.porcentajesAhorroEInversion();
-        //double porcentajeAhorro = porcentajesAI[0];
-        //double porcentajeInversion = porcentajesAI[1];
 
-        double ExcedenteFinDeMes = ingresosmensuales - gastosRecurrentes;
-        this.setTxtUsername(nombre + " " + apellido);
+
+
+
+
+        PerfilesConsumo porcentajes = new PerfilesConsumo();
+        PerfilesConsumo objExc = new PerfilesConsumo();
+        PerfilesConsumo Pfinal = SesionUsuario.getPerfilStatus();
+        double excedenteMensual;
+
+        try {
+            excedenteMensual = objExc.getExcedenteMensual(ingresosmensuales, gastosRecurrentes);
+        } catch (Exception e) {
+            excedenteMensual = 0;
+        }
         NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.GERMANY);
+        double porcentajeAhorro = Pfinal.getAhorroMensual();
+        double porcentajeInversion = Pfinal.getInversionMensual();
 
-        String Fingresosmensuales = numberFormat.format(ingresosmensuales);
-        String FExcedenteFinDeMes = numberFormat.format(ExcedenteFinDeMes);
+        double[] porcentajesAI = porcentajes._porcentajesAhorroEInversion(porcentajeAhorro, porcentajeInversion);
 
+        porcentajeAhorro = porcentajesAI[0];
+        porcentajeInversion = porcentajesAI[1];
+
+
+        // Crear instancia de PerfilesConsumo
+        PerfilesConsumo perfilGlobal = new PerfilesConsumo (ingresosmensuales, gastosRecurrentes, porcentajeAhorro, porcentajeInversion, perfilconsumo);
+        // Calcular distribución semanal y obtener presupuesto por día
+        Map<String, Double> distribucionSemanal = perfilGlobal.calcularDistribucionSemanal();
+
+
+
+
+
+        this.setTxtUsername(nombre + " " + apellido);
+        PerfilesConsumo PerfilC = Pfinal;
+        String Fingresosmensuales = numberFormat.format(PerfilC.getingresosMensuales());
+
+        String FExcedenteFinDeMes = numberFormat.format(PerfilC.getExcedenteMensual(ingresosmensuales, gastosRecurrentes));
+        System.out.println("ESTE ES EL EXCEDENTE FIN DE MES: " + PerfilC.getExcedenteMensual() + " " + FExcedenteFinDeMes);
         this.setTxtIngresosMensuales("$" + Fingresosmensuales);
 
         this.setTxtExcedenteFinDeMes("$" + FExcedenteFinDeMes);
 
-//TODO:  get form json
+        this.txtPresupuestoDiarioSegunPerfilConsumo.setText("$" + calculateAverage(precios_semana));
+
+        //TODO:  get form json
         List<Transaccion> trlist = JsonCRUD.getTransaccionesList(usuario);
         int index=1;
         for (Transaccion t : trlist) {
@@ -146,6 +187,68 @@ public class DashBoardController {
         this.tbTabla.setItems(FXCollections.observableArrayList(items));
         List<Transaccion> listaT = JsonCRUD.getTransaccionesList(usuario);
         System.out.println("Lista de transacciones para este usario: \n" + listaT);
+
+
+
+
+        // CHARTS: GRAFICOS DE BARRAS Y DE LINEAS:
+
+        // this.chart_distribucionSemanal
+
+
+
+
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+
+        for (int i = 0; i < diasDeLaSemana.length; i++) {
+            series.getData().add(new XYChart.Data<>(diasDeLaSemana[i], precios_semana[i]));
+        }
+        this.chart_distribucionSemanal.getData().add(series);
+
+
+        // this.chart_resumenTransacciones
+
+        //ordenar las transacciones por fecha: antiguo a mas reciente:
+
+        trlist.sort(Comparator.comparing(Transaccion::_getFecha));
+
+        String[] X_fechas = new String[trlist.size()];
+        double[] Y_montosFinales= new double[trlist.size()];
+
+        for (int i = 0; i < trlist.size(); i++) {
+            X_fechas[i] = trlist.get(i).getFecha();
+            Y_montosFinales[i] = trlist.get(i).getMontoFinal();
+        }
+
+
+        XYChart.Series<String, Number> series2 = new XYChart.Series<>();
+
+        for (int i = 0; i < X_fechas.length; i++) {
+            series2.getData().add(new XYChart.Data<>(X_fechas[i], Y_montosFinales[i]));
+        }
+
+        this.chart_resumenTransacciones.getData().add(series2);
+
+
+        for (Object series_a : chart_distribucionSemanal.getData()) {
+            series_a = (XYChart.Series<String, Number>) series_a;
+            for (Object data : ((XYChart.Series<?, ?>) series_a).getData()) {
+                XYChart.Data<String, Number> data_a = (XYChart.Data<String, Number>) data;
+                Label label = new Label(data_a.getYValue().toString());
+                label.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
+                Node node = data_a.getNode();
+                node.parentProperty().addListener((ov, oldParent, parent) -> {
+                    Group parentGroup = (Group) parent;
+                    parentGroup.getChildren().add(label);
+                });
+                node.boundsInParentProperty().addListener((ov, oldBounds, bounds) -> {
+                    label.setLayoutX(Math.round(
+                            bounds.getMinX() + bounds.getWidth() / 2 - label.prefWidth(-1) / 2));
+                    label.setLayoutY(Math.round(
+                            bounds.getMinY() - label.prefHeight(-1) * 0.5));
+                });
+            }
+        }
 
     }
 
@@ -221,6 +324,27 @@ public class DashBoardController {
             new App().mostrarVista("AgregarTransaccion/AgregarTransaccion.fxml");
         }
     }
+    public double calculateAverage(double[] array) {
+        return Arrays.stream(array).average().orElse(Double.NaN);
+    }
 
+    public void cambioInformacionPersonalExtra(ActionEvent actionEvent) {
 
+        if (SesionUsuario.session()) {
+            new App().mostrarVista("InformacionPersonal/ExtraInformacionPersonal.fxml");
+        }
+    }
+    public static Double convertStringToDouble(String str) {
+        // Reemplaza las comas por puntos
+        String replacedStr = str.replace(',', '.');
+
+        try {
+            // Intenta convertir el string a double
+            return Double.parseDouble(replacedStr);
+        } catch (NumberFormatException e) {
+            // Imprime un mensaje de error si el string no puede ser convertido a double
+            System.out.println("Error: El string contiene caracteres no numéricos o no es un número válido.");
+            return null;
+        }
+    }
 }

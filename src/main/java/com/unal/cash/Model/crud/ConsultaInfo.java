@@ -78,9 +78,14 @@ public class ConsultaInfo {
         System.out.println("Excendente mensual:_________$ " + excedenteMensual);      // NUEVO PRINT
 
         // Crear instancia de PerfilesConsumo
-        PerfilesConsumo objPerfilConsumo = new PerfilesConsumo (ingresosmensuales, gastosRecurrentes, porcentajeAhorro, porcentajeInversion, perfilconsumo);
+        PerfilesConsumo perfilGlobal = new PerfilesConsumo (ingresosmensuales, gastosRecurrentes, porcentajeAhorro, porcentajeInversion, perfilconsumo);
         // Calcular distribución semanal y obtener presupuesto por día
-        Map<String, Double> distribucionSemanal = objPerfilConsumo.calcularDistribucionSemanal();
+        Map<String, Double> distribucionSemanal = perfilGlobal.calcularDistribucionSemanal();
+
+        perfilGlobal.setDistribucionSemanal(distribucionSemanal);
+        perfilGlobal.setExcedenteMensual(excedenteMensual);
+
+        SesionUsuario.setPerfilStatus(perfilGlobal);// NUEVO SETTER
 
         // Mostrar distribución semanal de gastos
         System.out.println("\nDistribucion semanal de gastos (presupuesto diario):");

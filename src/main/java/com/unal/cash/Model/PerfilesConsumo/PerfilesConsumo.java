@@ -14,11 +14,52 @@ public class PerfilesConsumo {
     private static final int SEMANAS_EN_MES = 4;
     
     private static final DecimalFormat df = new DecimalFormat("#.00");
-    double porcentajeAhorro;
-    double porcentajeInversion;
+    private double porcentajeAhorro;
+    private double porcentajeInversion;
     private double gastosRecurrentes;
+
+    @Override
+    public String toString() {
+        return "PerfilesConsumo{" +
+                "porcentajeAhorro=" + porcentajeAhorro +
+                ", porcentajeInversion=" + porcentajeInversion +
+                ", gastosRecurrentes=" + gastosRecurrentes +
+                ", perfilConsumo=" + perfilConsumo +
+                ", ahorroMensual=" + ahorroMensual +
+                ", inversionMensual=" + inversionMensual +
+                ", ingresosMensuales=" + ingresosMensuales +
+                ", ExcedenteMensual=" + ExcedenteMensual +
+                ", distribucionSemanal=" + distribucionSemanal +
+                '}';
+    }
+
     private int perfilConsumo;
-    double ingresosMensuales;
+    private double ahorroMensual;
+
+    public double getInversionMensual() {
+        return inversionMensual;
+    }
+
+    public void setInversionMensual(double inversionMensual) {
+        this.inversionMensual = inversionMensual;
+    }
+
+    public double getAhorroMensual() {
+        return ahorroMensual;
+    }
+
+    public void setAhorroMensual(double ahorroMensual) {
+        this.ahorroMensual = ahorroMensual;
+    }
+
+    private double inversionMensual;
+    public double ingresosMensuales, ExcedenteMensual;
+
+    public double getingresosMensuales() {
+        return this.ingresosMensuales;
+    }
+
+    private Map<String, Double> distribucionSemanal;
 
     public PerfilesConsumo() {
     }
@@ -68,16 +109,23 @@ public class PerfilesConsumo {
         
         return porcentajesAhrrInvrsn;
     }
+
+    public double[] _porcentajesAhorroEInversion(double porcentajeAhorro, double porcentajeInversion){
+        double porcentajesAhrrInvrsn [] = {porcentajeAhorro/100, porcentajeInversion/100};
+        return porcentajesAhrrInvrsn;
+    }
    
     // NUEVO MÉTODO PARA OBTENER EL EXCEDENTE MENSUAL
     public double getExcedenteMensual(double ingresosMensuales, double gastosRecurrentes){
         double sumaMontosFinales = JsonCRUD.obtenerSumaMontosFinalesUsuario(SesionUsuario.getUsuarioLog());    // NUEVA VARIABLE DE LOS MONTOS DE LAS TRANSACCIONES
-        double excedenteMensual = ingresosMensuales - gastosRecurrentes - sumaMontosFinales;                   // ACA SE LE RESTA LA NUEVA VARIABLE
+        double excedenteMensual = ingresosMensuales - gastosRecurrentes - sumaMontosFinales;
+        // ACA SE LE RESTA LA NUEVA VARIABLE
+        this.setExcedenteMensual(excedenteMensual);
         return excedenteMensual;
     }
             
     public Map<String, Double> calcularDistribucionSemanal() {
-        double sumaMontosFinales = JsonCRUD.obtenerSumaMontosFinalesUsuario(SesionUsuario.getUsuarioLog());  // NUEVA VARIABLE DE LOS MONTOS DE LAS TRANSACCIONES
+        double sumaMontosFinales = JsonCRUD.obtenerSumaMontosFinalesUsuario(SesionUsuario.getUsuarioLog());
         
         Map<String, Double> distribucionSemanal = new HashMap<>();
 
@@ -86,6 +134,9 @@ public class PerfilesConsumo {
         double ahorroMensual = excedenteMensual * porcentajeAhorro;
         double inversionMensual = excedenteMensual * porcentajeInversion;
         double presupuestoSemanal = ingresosMensuales - ahorroMensual - inversionMensual;
+        System.out.println("\n\n\n\n\n\n\nPORCENTAJE DE AHORRO: "+porcentajeAhorro + " \n\n\n\n\n\nPORCENTAJE DE INVERSION: "+porcentajeInversion);
+        this.setAhorroMensual(ahorroMensual);
+        this.setInversionMensual(inversionMensual);
 
         // Imprimir ahorro e inversión mensual
        System.out.println("Ahorro mensual: $" + df.format(ahorroMensual));
@@ -99,26 +150,72 @@ public class PerfilesConsumo {
 
         // Calcular presupuesto diario a partir del presupuesto semanal
         double presupuestoDiario = presupuestoSemanal / (DIAS_EN_SEMANA * SEMANAS_EN_MES);
-
+        System.out.println("\n\n\n\n"+this.perfilConsumo + "\n\n\n");
         // Configurar el perfil de consumo seleccionado
-        switch (perfilConsumo) {
+        switch (this.perfilConsumo) {
            case 1:
-               distribuirConstante(presupuestoDiario, distribucionSemanal, perfilConsumo);
+               distribuirConstante(presupuestoDiario, distribucionSemanal, this.perfilConsumo);
                break;
            case 2:
-               distribuirFinDeSemanaGastador(presupuestoDiario, distribucionSemanal, perfilConsumo);
+               distribuirFinDeSemanaGastador(presupuestoDiario, distribucionSemanal, this.perfilConsumo);
                break;
            case 3:
-               distribuirEntreSemanaGastador(presupuestoDiario, distribucionSemanal, perfilConsumo);
+               distribuirEntreSemanaGastador(presupuestoDiario, distribucionSemanal, this.perfilConsumo);
                break;
            case 4:
-               distribuirViernesGastador(presupuestoDiario, distribucionSemanal, perfilConsumo);
+               distribuirViernesGastador(presupuestoDiario, distribucionSemanal, this.perfilConsumo);
                break;
            default:
                throw new IllegalArgumentException("Perfil de consumo inválido");
        }
         return distribucionSemanal;
     }
+
+    public Map<String, Double> _calcularDistribucionSemanal() {
+        double sumaMontosFinales = JsonCRUD.obtenerSumaMontosFinalesUsuario(SesionUsuario.getUsuarioLog());
+
+        Map<String, Double> distribucionSemanal = new HashMap<>();
+
+        // Calcular el excedente mensual disponible para distribuir
+        double excedenteMensual = ingresosMensuales - gastosRecurrentes - sumaMontosFinales;    // ACA SE LE RESTA LA NUEVA VARIABLE
+        double ahorroMensual = excedenteMensual * porcentajeAhorro;
+        double inversionMensual = excedenteMensual * porcentajeInversion;
+        double presupuestoSemanal = ingresosMensuales - ahorroMensual - inversionMensual;
+
+        // Imprimir ahorro e inversión mensual
+        System.out.println("Ahorro mensual: $" + df.format(ahorroMensual));
+        System.out.println("Inversion mensual: $" + df.format(inversionMensual));
+
+        // Verificar que el presupuesto semanal no exceda el excedente mensual
+        if (presupuestoSemanal < 0) {
+            System.out.println("Error: El presupuesto semanal excede el excedente mensual disponible.");
+            return distribucionSemanal;
+        }
+
+        // Calcular presupuesto diario a partir del presupuesto semanal
+        double presupuestoDiario = presupuestoSemanal / (DIAS_EN_SEMANA * SEMANAS_EN_MES);
+
+        // Configurar el perfil de consumo seleccionado
+        switch (this.perfilConsumo) {
+            case 1:
+                distribuirConstante(presupuestoDiario, distribucionSemanal, this.perfilConsumo);
+                break;
+            case 2:
+                distribuirFinDeSemanaGastador(presupuestoDiario, distribucionSemanal, this.perfilConsumo);
+                break;
+            case 3:
+                distribuirEntreSemanaGastador(presupuestoDiario, distribucionSemanal, this.perfilConsumo);
+                break;
+            case 4:
+                distribuirViernesGastador(presupuestoDiario, distribucionSemanal, this.perfilConsumo);
+                break;
+            default:
+                System.out.println("Error: Perfil de consumo inválido" + this.perfilConsumo);
+                throw new IllegalArgumentException("Perfil de consumo inválido" + this.perfilConsumo);
+        }
+        return distribucionSemanal;
+    }
+
 
     public double calcularPonderacionDia(String dia, int perfilConsumo) {
         double ponderacion = 0;
@@ -127,11 +224,15 @@ public class PerfilesConsumo {
             case 2 -> ponderacion = (dia.equals("Sábado") || dia.equals("Domingo")) ? 1.2 : 0.92;
             case 3 -> ponderacion = (dia.equals("Martes") || dia.equals("Miércoles")) ? 1.2 : 0.92;
             case 4 -> ponderacion = dia.equals("Viernes") ? 1.18 : 0.97;
-            default -> throw new IllegalArgumentException("Perfil de consumo invalido");
+            default-> {
+                System.out.println("Error: Perfil de consumo invalido ----> "+ perfilConsumo);
+                throw new IllegalArgumentException("Perfil de consumo invalido");
+            }
         }
 
         return ponderacion;
     }
+
          
     public void distribuirConstante(double presupuestoDiarioBase, Map<String, Double> distribucionSemanal, int perfilConsumo) {
         for (String dia : DIAS_SEMANA) {
@@ -155,6 +256,8 @@ public class PerfilesConsumo {
                distribucionSemanal.put(dia, presupuestoDiario);
            }
        }
+
+
     }
 
     public void distribuirEntreSemanaGastador(double presupuestoDiarioBase, Map<String, Double> distribucionSemanal, int perfilConsumo) {
@@ -187,5 +290,21 @@ public class PerfilesConsumo {
                distribucionSemanal.put(dia, presupuestoDiario);
            }
        }
+    }
+    public Map<String, Double> getDistribucionSemanal() {
+        return this.distribucionSemanal;
+    }
+
+    public void setDistribucionSemanal(Map<String, Double> distribucionSemanal) {
+        this.distribucionSemanal = distribucionSemanal;
+        System.out.println("  distribucion desde PERFILES CONSUMO: "+this.distribucionSemanal);
+    }
+
+    public void setExcedenteMensual(double excedenteMensual) {
+        this.ExcedenteMensual = excedenteMensual;
+    }
+
+    public double getExcedenteMensual() {
+        return ExcedenteMensual;
     }
 }

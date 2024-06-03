@@ -1,5 +1,6 @@
 package com.unal.cash;
 
+import com.unal.cash.Model.JSON.JsonCRUD;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,6 +20,7 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         stage = primaryStage;
+        JsonCRUD json= new JsonCRUD();
         mostrarVista("Home.fxml"); // Use FXML filename directly
     }
 

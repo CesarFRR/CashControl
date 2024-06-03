@@ -42,6 +42,7 @@ public class AgregarTransaccionController {
     private PersonaDAO personaDao = new PersonaDAO();
     private TransaccionesDAO transaccionesDAO = new TransaccionesDAO();
 
+
     @FXML
     void initialize() {
 
@@ -85,6 +86,10 @@ public class AgregarTransaccionController {
 
             String usuario = SesionUsuario.getUsuarioLog();
             String fecha = this.dt_fecha.getValue().toString();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String fechaFormateada = this.dt_fecha.getValue().format(formatter);
+            System.out.println("Fecha: " + fecha);
+            fecha = fechaFormateada;
             String monto = this.txt_monto.getText();
             String intereses = this.txt_intereses.getText();
             String descuento = this.txt_descuento.getText();

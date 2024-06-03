@@ -4,6 +4,7 @@ import com.unal.cash.App;
 import com.unal.cash.Database.datos.PersonaDAO;
 import com.unal.cash.Database.domain.Persona;
 import com.unal.cash.Model.Login.SesionUsuario;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -16,90 +17,66 @@ import java.util.Arrays;
 public class PerfildeConsumoController {
     public Label labConsumoActual;
     @FXML
-    private Button bt_150_Mas;
+    private Button bt_const;
 
     @FXML
-    private Button bt_20_50;
+    private Button bt_finDeSemG;
 
     @FXML
-    private Button bt_50_90;
+    private Button bt_entreSemG;
 
     @FXML
-    private Button bt_5_20;
-
-    @FXML
-    private Button bt_90_150;
-
-    @FXML
-    private Button bt_MasDineroFinDe;
+    private Button bt_viernesG;
 
     private Persona P;
 
     private Button selected;
     private final String[] perfilesConsumo = {
-            "Gasto dinero todos los dias entre 5.000 - 20.000",
-            "Gasto dinero todos los dias entre 20.000 - 50.000",
-            "Gasto dinero todos los dias entre 50.000 - 90.000",
-            "Gasto dinero todos los dias entre 90.000 - 150.000",
-            "Todos los días gasto más de 150.000",
-            "Gasto más dinero el fin de semana"};
+            "Constante",
+            "Fin de semana gastador",
+            "Entre semana gastador",
+            "Viernes gastador"};
 
     private ArrayList<Button> btlist ;
     private PersonaDAO personaDao= new PersonaDAO();
 
     @FXML
     void initialize() {
-        this.P = this.personaDao.getPersona(SesionUsuario.getUsuarioLog());
-        this.btlist = new ArrayList<>();
-        btlist.add(bt_150_Mas);
-        btlist.add(bt_20_50);
-        btlist.add(bt_50_90);
-        btlist.add(bt_5_20);
-        btlist.add(bt_90_150);
-        btlist.add(bt_MasDineroFinDe);
+        this.btlist = new ArrayList<>(Arrays.asList(this.bt_const, this.bt_finDeSemG, this.bt_entreSemG, this.bt_viernesG));
+        this.selected = new Button();
+        // Obtener los datos en un hilo separado
+        new Thread(() -> {
+            this.P = this.personaDao.getPersona(SesionUsuario.getUsuarioLog());
+            int indexConsumoActual = (int)P.getPerfilconsumo();
 
-        int indexConsumoActual = (int)P.getPerfilconsumo();
-        labConsumoActual = new Label("Perfil de consumo actual: "+ this.perfilesConsumo[indexConsumoActual]);
-//        labConsumoActual.setText();
-    }
+            // Actualizar la interfaz de usuario en el hilo de la interfaz de usuario
+            Platform.runLater(() -> {
+                if (this.labConsumoActual == null) this.labConsumoActual = new Label("Perfil de consumo actual: "+ this.perfilesConsumo[indexConsumoActual]);
+                this.labConsumoActual.setText("Perfil de consumo actual: "+ this.perfilesConsumo[indexConsumoActual]);
+                Button button = this.btlist.get(indexConsumoActual);
+                if (button != null) {
+                    this.selected = button;
+                    this.Colorbt(new ActionEvent());
+                } else {
+                    System.out.println("El botón obtenido es null");
+                }
+            });
+        }).start();
 
-    @FXML
-    void setGasto_5_20(ActionEvent event) {
-        this.selected = this.bt_5_20;
-        this.Colorbt(event);
-
-    }
-    @FXML
-    void setGasto_20_50(ActionEvent event) {
-        this.selected = this.bt_20_50;
-        this.Colorbt(event);
-    }
-    @FXML
-    void setGasto_50_90(ActionEvent event) {
-        this.selected = this.bt_50_90;
-        this.Colorbt(event);
-    }
-
-    @FXML
-    void setGasto_90_150(ActionEvent event) {
-        this.selected = this.bt_90_150;
-        this.Colorbt(event);
-    }
-
-    @FXML
-    void setGasto_150_Mas(ActionEvent event) {
-        this.selected = this.bt_150_Mas;
-        this.Colorbt(event);
-    }
-
-    @FXML
-    void setGasto_MasDineroFinDe(ActionEvent event) {
-        this.selected = this.bt_MasDineroFinDe;
-        this.Colorbt(event);
+        if (this.selected == null) this.selected = this.btlist.get((int)(this.personaDao.getPersona(SesionUsuario.getUsuarioLog())).getPerfilconsumo());
     }
 
     void Colorbt(ActionEvent event) {
         // Cambiar el color del texto del botón seleccionado a rojo
+        if (this.selected == null) {
+            Button button = this.btlist.get((int)(this.personaDao.getPersona(SesionUsuario.getUsuarioLog())).getPerfilconsumo());
+            if (button != null) {
+                this.selected = button;
+            } else {
+                System.out.println("Colorbt:--> El botón obtenido es null");
+                return;
+            }
+        }
         this.selected.setTextFill(Color.RED);
         System.out.print("el seleccionado es: " + this.selected.getText());
 
@@ -138,4 +115,23 @@ public class PerfildeConsumoController {
         }
     }
 
+    public void set_gconst(ActionEvent actionEvent) {
+        this.selected = this.bt_const;
+        this.Colorbt(actionEvent);
+    }
+
+    public void set_gfindeg(ActionEvent actionEvent) {
+        this.selected = this.bt_finDeSemG;
+        this.Colorbt(actionEvent);
+    }
+
+    public void set_gentresemg(ActionEvent actionEvent) {
+        this.selected = this.bt_entreSemG;
+        this.Colorbt(actionEvent);
+    }
+
+    public void set_gviernesg(ActionEvent actionEvent) {
+        this.selected = this.bt_viernesG;
+        this.Colorbt(actionEvent);
+    }
 }

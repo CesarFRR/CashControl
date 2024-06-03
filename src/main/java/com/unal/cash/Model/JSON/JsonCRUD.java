@@ -4,6 +4,8 @@ Esta clase es para la conexión y manipulación del archivo tipo JSON, donde gua
 Es decir que funciona como una especie de base de datos.
 */
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.ArrayList;
 import com.unal.cash.Model.tranYmetpago.Transaccion;
@@ -17,21 +19,30 @@ public class JsonCRUD {
     private static final String RUTA_PADRE = System.getProperty("user.dir") + "/src/main/java/com/unal/cash/Database/";
     private static final String RUTA_ARCHIVO_JSON = RUTA_PADRE + NOMBRE_JSON;
 
-    // Bloque de inicialización estática
-    static {
-        File file = new File(RUTA_ARCHIVO_JSON);
-        if (!file.exists()) {
-            try {
-                // Si el archivo no existe, crearlo
-                file.createNewFile();
-                System.out.println("Archivo creado: " + file.getName());
-            } catch (IOException e) {
-                System.out.println("Error al crear el archivo.");
-                e.printStackTrace();
+    public JsonCRUD() {
+        try {
+            String path = RUTA_ARCHIVO_JSON;
+            if (!Files.exists(Paths.get(path))) {
+                Files.createFile(Paths.get(path));
+                System.out.println("Archivo creado: " + Paths.get(path).getFileName());
+                JSONArray jsonArray = new JSONArray();
+                jsonArray.add(new JSONObject()); // Agrega un objeto JSON vacío al array
+                try (FileWriter escritor = new FileWriter(path)) {
+                    escritor.write(jsonArray.toJSONString());
+                    escritor.flush();
+                }
             }
+        }catch(IOException e){
+            System.out.println("Error al crear el archivo.");
+            e.printStackTrace();
         }
     }
 
+    public static boolean isEmpty() {
+
+
+        return false;
+    }
     // Método que lee el JSON y extrae toda su información
     public static String obtenerJSONDesdeArchivo() {
         System.out.println("ruta actual: " + System.getProperty("user.dir"));
@@ -109,6 +120,7 @@ public class JsonCRUD {
 
     public static List<Transaccion> getTransaccionesList(String usuario) {
         List<Transaccion> transacciones = new ArrayList<>();
+
         String strJson = obtenerJSONDesdeArchivo();
         try {
             JSONParser parser = new JSONParser();
