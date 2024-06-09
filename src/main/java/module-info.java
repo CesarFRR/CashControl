@@ -3,7 +3,8 @@ module com.unal.cash {
     requires javafx.fxml;
     requires java.sql;
     requires javafx.graphics;
-    requires json.simple; // **Agrega javafx.graphics**
+    requires json.simple;
+    requires mysql.connector.java; // **Agrega javafx.graphics**
 
 
     exports com.unal.cash.Controller to javafx.fxml; // Provide access for FXML

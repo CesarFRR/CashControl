@@ -100,7 +100,7 @@
             <Font name="Arial Black" size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="txt_excedente_fin_mes" layoutX="430.0" layoutY="481.0" />
+      <TextField fx:id="txt_excedente_fin_mes" editable="false" layoutX="430.0" layoutY="481.0" />
       <Label layoutX="597.0" layoutY="469.0" prefHeight="50.0" prefWidth="138.0" text="Método de pago más usado:" textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="Arial Black" size="15.0" />

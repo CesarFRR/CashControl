@@ -1,5 +1,6 @@
 package com.unal.cash.Controller.DashBoard;
 
+import com.mysql.cj.Session;
 import com.unal.cash.App;
 import com.unal.cash.Database.datos.PersonaDAO;
 import com.unal.cash.Database.datos.TransaccionesDAO;
@@ -69,6 +70,7 @@ public class DashBoardController {
     public void initialize() {
         String[] diasDeLaSemana = this.DIAS_SEMANA;
         Collection<Double> _precios = SesionUsuario.getPerfilStatus().getDistribucionSemanal().values();
+        Map <String, Double> _distribucionSemanal = SesionUsuario.getPerfilStatus().getDistribucionSemanal();
         double[] precios_semana = _precios.stream().mapToDouble(Double::doubleValue).toArray();
         // You can access and modify the elements here before the view is shown.
         // For example, to set the text of txtUsername:
@@ -76,6 +78,7 @@ public class DashBoardController {
         String usuario = SesionUsuario.getUsuarioLog();
         String[] datosStr = personaDao.SeleccionarUnoDS(usuario);
         double[] datosDbl = personaDao.SeleccionarUnoDDouble(usuario);
+        System.out.println("ESTE ES EL PERFIL DE CONSUMO DESDE DASHBOARD: " + SesionUsuario.getPerfilStatus().getPerfilConsumo());
 
         //String contraseña = datosStr[1];
         String nombre = datosStr[2];
@@ -111,7 +114,7 @@ public class DashBoardController {
         double porcentajeAhorro = Pfinal.getAhorroMensual();
         double porcentajeInversion = Pfinal.getInversionMensual();
 
-        double[] porcentajesAI = porcentajes._porcentajesAhorroEInversion(porcentajeAhorro, porcentajeInversion);
+        double[] porcentajesAI = porcentajes.porcentajesAhorroEInversion(porcentajeAhorro, porcentajeInversion);
 
         porcentajeAhorro = porcentajesAI[0];
         porcentajeInversion = porcentajesAI[1];
@@ -201,7 +204,8 @@ public class DashBoardController {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
 
         for (int i = 0; i < diasDeLaSemana.length; i++) {
-            series.getData().add(new XYChart.Data<>(diasDeLaSemana[i], precios_semana[i]));
+            String dia = diasDeLaSemana[i];
+            series.getData().add(new XYChart.Data<>(dia,_distribucionSemanal.get(dia)));
         }
         this.chart_distribucionSemanal.getData().add(series);
 

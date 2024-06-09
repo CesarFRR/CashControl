@@ -33,7 +33,7 @@ public class ConsultaInfo {
         double educacion = datosDbl[6];
         double entretenimiento = datosDbl[7];
         double personal = datosDbl[8];
-        int perfilconsumo = (int) datosDbl[10];
+        int perfilconsumo = ((int) datosDbl[10]) +1;
         double gastosRecurrentes = datosDbl[3]+datosDbl[4]+datosDbl[5]+datosDbl[6]+datosDbl[7]+datosDbl[8];
         double[] porcentajesAI = porcentajes.porcentajesAhorroEInversion();
         double porcentajeAhorro = porcentajesAI[0];

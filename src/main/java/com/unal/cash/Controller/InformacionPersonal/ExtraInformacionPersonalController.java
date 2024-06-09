@@ -28,15 +28,14 @@ public class ExtraInformacionPersonalController {
         // You can access and modify the elements here before the view is shown.
         // For example, to set the text of txtUsername:
         PerfilesConsumo perfilC = SesionUsuario.getPerfilStatus();
-        Map<String, Double> distribucionSemanal = perfilC.getDistribucionSemanal();
-        ArrayList<Double> distribucionSemanalArray = new ArrayList<>(distribucionSemanal.values());
-        txt_lunes.setText(String.valueOf(distribucionSemanalArray.get(0)));
-        txt_martes.setText(String.valueOf(distribucionSemanalArray.get(1)));
-        txt_miercoles.setText(String.valueOf(distribucionSemanalArray.get(2)));
-        txt_jueves.setText(String.valueOf(distribucionSemanalArray.get(3)));
-        txt_viernes.setText(String.valueOf(distribucionSemanalArray.get(4)));
-        txt_sabado.setText(String.valueOf(distribucionSemanalArray.get(5)));
-        txt_domingo.setText(String.valueOf(distribucionSemanalArray.get(6)));
+        Map<String, Double> distribucionSemanal = perfilC.calcularDistribucionSemanal();
+        txt_lunes.setText(String.valueOf(distribucionSemanal.get("Lunes")));
+        txt_martes.setText(String.valueOf(distribucionSemanal.get("Martes")));
+        txt_miercoles.setText(String.valueOf(distribucionSemanal.get("Miércoles")));
+        txt_jueves.setText(String.valueOf(distribucionSemanal.get("Jueves")));
+        txt_viernes.setText(String.valueOf(distribucionSemanal.get("Viernes")));
+        txt_sabado.setText(String.valueOf(distribucionSemanal.get("Sábado")));
+        txt_domingo.setText(String.valueOf(distribucionSemanal.get("Domingo")));
 
        txt_ahorromensual.setText(String.valueOf(perfilC.getAhorroMensual()));
        txt_inversionmensual.setText(String.valueOf(perfilC.getInversionMensual()));
